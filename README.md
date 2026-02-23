@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financial Copilot 🇨🇦
+
+> An AI-powered financial decision tool for complex Canadian tax scenarios.
+> Built as a submission for the Wealthsimple AI Builders program.
+
+## What it does
+
+Financial Copilot analyzes a user's complete financial profile — employment income,
+freelance revenue, rental properties, registered accounts — and generates
+prioritized recommendations with explicit confidence scoring and human handoff design.
+
+## The human/AI boundary
+
+This system is deliberately designed around one core principle:
+**AI recommends, humans decide.**
+
+- ✅ AI handles: tax optimization, contribution room analysis, scenario simulations
+- 🤝 Human required: CRI withdrawals, succession planning, incorporation decisions
+
+## Tech Stack
+
+- **Frontend**: Next.js 16 + React 19 + TypeScript + Tailwind CSS 4 + shadcn/ui
+- **Backend**: Next.js App Router API Routes
+- **AI**: OpenAI GPT-4o
+- **Validation**: Zod
+- **State**: Zustand
+- **Forms**: React Hook Form
+- **Charts**: Recharts
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Add your OpenAI API key
+cp .env.example .env.local
+# Edit .env.local and add your OPENAI_API_KEY
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/              # Next.js App Router pages & API routes
+├── components/
+│   ├── ui/           # shadcn primitives
+│   ├── features/     # Feature-specific components
+│   └── layout/       # Layout components
+├── lib/
+│   ├── openai/       # LLM client + prompts
+│   ├── tax-rules/    # Verified fiscal data (2026)
+│   └── calculations/ # Pure financial logic
+├── store/            # Zustand global state
+└── types/            # TypeScript types
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Failure Modes & Mitigations
 
-## Learn More
+| Risk | Mitigation |
+|------|------------|
+| LLM tax hallucination | All figures validated against verified JSON tax rules |
+| False confidence | Confidence score on every recommendation |
+| Incomplete profile | System detects gaps and asks before recommending |
+| Outdated rules | Tax data has expiry date, system alerts if stale |
+| Irreversible decisions | Hard-flagged in red, mandatory human review |
 
-To learn more about Next.js, take a look at the following resources:
+## Disclaimer
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This tool is for informational purposes only and does not constitute financial advice.
+Always consult a qualified financial advisor before making financial decisions.

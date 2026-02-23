@@ -123,7 +123,7 @@ export function Step1Income({ onNext }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Personal Info */}
-      <Card className="border-border bg-card">
+      <Card className="onboarding-card">
         <CardHeader>
           <CardTitle className="text-base">Personal Information</CardTitle>
           <CardDescription>Basic profile details</CardDescription>
@@ -205,7 +205,7 @@ export function Step1Income({ onNext }: Props) {
       </Card>
 
       {/* Employment Income */}
-      <Card className="border-border bg-card">
+      <Card className="onboarding-card">
         <CardHeader>
           <CardTitle className="text-base">Employment Income</CardTitle>
           <CardDescription>Your T4 employment details</CardDescription>
@@ -238,7 +238,7 @@ export function Step1Income({ onNext }: Props) {
       </Card>
 
       {/* Freelance Income */}
-      <Card className="border-border bg-card">
+      <Card className="onboarding-card">
         <CardHeader>
           <CardTitle className="text-base">
             Freelance / Self-Employed Income
@@ -314,7 +314,8 @@ export function Step1Income({ onNext }: Props) {
 
       <Button
         type="submit"
-        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
+        className="w-full text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+        style={{ background: "var(--ws-green)" }}
       >
         Continue to Accounts →
       </Button>

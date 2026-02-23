@@ -232,7 +232,7 @@ export function Step4LifeEvents({ onBack }: Props) {
         <div>
           <h3 className="text-sm font-semibold">Upcoming Life Events</h3>
           <p className="text-xs text-muted-foreground mt-1">
-            Add major expenses you're planning in the next few years
+            Add major expenses you&apos;re planning in the next few years
           </p>
         </div>
 
@@ -240,7 +240,7 @@ export function Step4LifeEvents({ onBack }: Props) {
         {lifeEvents.map((event, index) => {
           const config = EVENT_CONFIG[event.type];
           return (
-            <Card key={index} className="border-border bg-card">
+            <Card key={index} className="onboarding-card">
               <CardContent className="flex items-center justify-between py-4">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-full ${config.color}`}>
@@ -364,7 +364,8 @@ export function Step4LifeEvents({ onBack }: Props) {
                 <div className="flex gap-3">
                   <Button
                     type="submit"
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white flex-1"
+                    className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+                    style={{ background: "var(--ws-green)" }}
                   >
                     Add Event
                   </Button>
@@ -372,6 +373,7 @@ export function Step4LifeEvents({ onBack }: Props) {
                     type="button"
                     variant="outline"
                     onClick={() => setShowForm(false)}
+                    className="rounded-full hover:opacity-90 transition-all"
                   >
                     Cancel
                   </Button>
@@ -385,7 +387,7 @@ export function Step4LifeEvents({ onBack }: Props) {
           <Button
             type="button"
             variant="outline"
-            className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+            className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:opacity-90 transition-all"
             onClick={() => setShowForm(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -396,7 +398,7 @@ export function Step4LifeEvents({ onBack }: Props) {
 
       {/* Monthly Budget Section */}
       <form onSubmit={handleBudgetSubmit(onFinalSubmit)} className="space-y-6">
-        <Card className="border-border bg-card">
+        <Card className="onboarding-card">
           <CardHeader>
             <CardTitle className="text-base">Monthly Budget</CardTitle>
             <CardDescription>Your typical monthly spending</CardDescription>
@@ -435,7 +437,7 @@ export function Step4LifeEvents({ onBack }: Props) {
         </Card>
 
         {/* Family Planning */}
-        <Card className="border-border bg-card">
+        <Card className="onboarding-card">
           <CardHeader>
             <CardTitle className="text-base">Family Planning</CardTitle>
             <CardDescription>Current and planned children</CardDescription>
@@ -466,13 +468,14 @@ export function Step4LifeEvents({ onBack }: Props) {
             type="button"
             variant="outline"
             onClick={onBack}
-            className="flex-1"
+            className="flex-1 rounded-full font-semibold py-6 hover:opacity-90 transition-all"
           >
             ← Back
           </Button>
           <Button
             type="submit"
-            className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold"
+            className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+            style={{ background: "var(--ws-green)" }}
           >
             Generate My Recommendations →
           </Button>

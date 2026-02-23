@@ -145,7 +145,7 @@ export function Step2Accounts({ onNext, onBack }: Props) {
           {accounts.map((account) => {
             const config = ACCOUNT_CONFIG[account.type];
             return (
-              <Card key={account.id} className="border-border bg-card">
+              <Card key={account.id} className="onboarding-card">
                 <CardContent className="flex items-center justify-between py-4">
                   <div className="flex items-center gap-3">
                     <Badge className={config.color}>{config.label}</Badge>
@@ -264,7 +264,8 @@ export function Step2Accounts({ onNext, onBack }: Props) {
               <div className="flex gap-3">
                 <Button
                   type="submit"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white flex-1"
+                  className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+                  style={{ background: "var(--ws-green)" }}
                 >
                   Add Account
                 </Button>
@@ -272,6 +273,7 @@ export function Step2Accounts({ onNext, onBack }: Props) {
                   type="button"
                   variant="outline"
                   onClick={() => setShowForm(false)}
+                  className="hover:opacity-90 transition-all"
                 >
                   Cancel
                 </Button>
@@ -284,11 +286,11 @@ export function Step2Accounts({ onNext, onBack }: Props) {
       {/* Add account button */}
       {!showForm && (
         <Button
-          type="button"
-          variant="outline"
-          className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
-          onClick={() => setShowForm(true)}
-        >
+            type="button"
+            variant="outline"
+            className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:opacity-90 transition-all"
+            onClick={() => setShowForm(true)}
+          >
           <Plus className="w-4 h-4 mr-2" />
           Add Account
         </Button>
@@ -296,13 +298,18 @@ export function Step2Accounts({ onNext, onBack }: Props) {
 
       {/* Navigation */}
       <div className="flex gap-3">
-        <Button variant="outline" onClick={onBack} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          className="flex-1 rounded-full font-semibold py-6 hover:opacity-90 transition-all"
+        >
           ← Back
         </Button>
         <Button
           onClick={handleContinue}
           disabled={accounts.length === 0}
-          className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white disabled:opacity-40"
+          className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all disabled:opacity-40"
+          style={{ background: "var(--ws-green)" }}
         >
           Continue to Real Estate →
         </Button>

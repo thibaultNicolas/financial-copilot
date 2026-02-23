@@ -1,5 +1,3 @@
-import { Brain } from "lucide-react";
-
 const STEPS = [
   "Analyzing your income sources...",
   "Calculating tax optimization opportunities...",
@@ -10,31 +8,45 @@ const STEPS = [
 
 export function LoadingRecommendations() {
   return (
-    <div className="flex flex-col items-center justify-center py-24 space-y-8">
-      <div className="relative">
-        <div className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center">
-          <Brain className="w-8 h-8 text-emerald-400 animate-pulse" />
+    <div className="flex flex-col items-center justify-center py-24 space-y-10">
+      {/* Spinner */}
+      <div className="relative w-16 h-16">
+        <div
+          className="absolute inset-0 rounded-full border-4 border-t-transparent animate-spin"
+          style={{
+            borderColor: "var(--ws-green-light)",
+            borderTopColor: "var(--ws-green)",
+          }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-xl">🧠</span>
         </div>
-        <div className="absolute inset-0 rounded-full border-2 border-emerald-500/30 animate-ping" />
       </div>
 
-      <div className="text-center space-y-2">
-        <h2 className="text-lg font-semibold">
+      <div className="text-center">
+        <h2 className="text-xl font-bold mb-2">
           Analyzing your financial profile
         </h2>
-        <p className="text-sm text-muted-foreground">
-          GPT-4o-mini is reviewing your complete situation
+        <p className="text-sm text-gray-500">
+          GPT-4o is reviewing your complete situation
         </p>
       </div>
 
-      <div className="w-full max-w-sm space-y-2">
+      <div className="space-y-3 w-full max-w-xs">
         {STEPS.map((step, index) => (
           <div
             key={index}
-            className="flex items-center gap-3 text-sm text-muted-foreground animate-pulse"
-            style={{ animationDelay: `${index * 0.4}s` }}
+            className="flex items-center gap-3 text-sm text-gray-400"
+            style={{
+              animation: `fadeUp 0.5s ease forwards`,
+              animationDelay: `${index * 0.3}s`,
+              opacity: 0,
+            }}
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+            <div
+              className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse-green"
+              style={{ background: "var(--ws-green)" }}
+            />
             {step}
           </div>
         ))}

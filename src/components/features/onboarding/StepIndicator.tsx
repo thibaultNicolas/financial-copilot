@@ -26,38 +26,46 @@ export function StepIndicator({ currentStep }: Props) {
 
         return (
           <div key={step.number} className="flex items-center">
-            {/* Step circle */}
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col items-center gap-1.5">
               <div
                 className={cn(
                   "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300",
-                  isCompleted && "bg-emerald-500 text-white",
-                  isCurrent &&
-                    "bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500",
-                  !isCompleted &&
-                    !isCurrent &&
-                    "bg-muted text-muted-foreground",
+                  isCompleted && "text-white",
+                  isCurrent && "border-2 font-bold",
+                  !isCompleted && !isCurrent && "bg-gray-100 text-gray-400",
                 )}
+                style={
+                  isCompleted
+                    ? { background: "var(--ws-green)" }
+                    : isCurrent
+                      ? {
+                          borderColor: "var(--ws-green)",
+                          color: "var(--ws-green)",
+                          background: "var(--ws-green-light)",
+                        }
+                      : {}
+                }
               >
                 {isCompleted ? <Check className="w-4 h-4" /> : step.number}
               </div>
               <span
                 className={cn(
                   "text-xs font-medium",
-                  isCurrent ? "text-emerald-400" : "text-muted-foreground",
+                  !isCurrent && "text-gray-400",
                 )}
+                style={isCurrent ? { color: "var(--ws-green)" } : {}}
               >
                 {step.label}
               </span>
             </div>
 
-            {/* Connector line */}
             {index < STEPS.length - 1 && (
               <div
-                className={cn(
-                  "w-16 h-0.5 mb-4 mx-1 transition-all duration-300",
-                  currentStep > step.number ? "bg-emerald-500" : "bg-muted",
-                )}
+                className="w-16 h-0.5 mb-5 mx-1 transition-all duration-500"
+                style={{
+                  background:
+                    currentStep > step.number ? "var(--ws-green)" : "#E9ECEF",
+                }}
               />
             )}
           </div>

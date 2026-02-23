@@ -1,5 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { FileText, HelpCircle, FolderOpen, AlertTriangle } from "lucide-react";
 import type { AdvisorBriefing as AdvisorBriefingType } from "@/types";
 
@@ -7,83 +5,93 @@ type Props = {
   briefing: AdvisorBriefingType;
 };
 
-const URGENCY_COLORS = {
-  LOW: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  MEDIUM: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-  HIGH: "bg-red-500/10 text-red-400 border-red-500/20",
+const URGENCY = {
+  LOW: { label: "Low urgency", bg: "#EFF6FF", text: "#3B82F6" },
+  MEDIUM: { label: "Medium urgency", bg: "#FFF7ED", text: "#F97316" },
+  HIGH: { label: "High urgency", bg: "#FEF2F2", text: "#EF4444" },
 };
 
 export function AdvisorBriefing({ briefing }: Props) {
+  const urgency = URGENCY[briefing.urgency];
+
   return (
-    <Card className="border-yellow-500/30 bg-card">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base flex items-center gap-2">
-            <FileText className="w-4 h-4 text-yellow-400" />
-            Advisor Briefing
-          </CardTitle>
-          <Badge className={URGENCY_COLORS[briefing.urgency]}>
-            {briefing.urgency} urgency
-          </Badge>
+    <div className="p-6 rounded-2xl border border-amber-200 bg-amber-50/20">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <FileText className="w-4 h-4 text-amber-500" />
+          <span className="font-semibold">Advisor Briefing</span>
         </div>
-        <p className="text-sm text-muted-foreground">{briefing.summary}</p>
-      </CardHeader>
+        <span
+          className="text-xs font-semibold px-2.5 py-1 rounded-full"
+          style={{ background: urgency.bg, color: urgency.text }}
+        >
+          {urgency.label}
+        </span>
+      </div>
+      <p className="text-sm text-gray-600 mb-6">{briefing.summary}</p>
 
-      <CardContent className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Complex issues */}
-        {briefing.complexIssues.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="w-3.5 h-3.5 text-yellow-400" />
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Complex Issues
-              </p>
-            </div>
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              Complex Issues
+            </span>
+          </div>
+          <ul className="space-y-2">
             {briefing.complexIssues.map((issue, i) => (
-              <div key={i} className="flex items-start gap-2 pl-5">
-                <div className="w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0 mt-1.5" />
-                <p className="text-xs text-muted-foreground">{issue}</p>
-              </div>
+              <li key={i} className="flex items-start gap-2">
+                <div className="w-1 h-1 rounded-full bg-amber-400 flex-shrink-0 mt-1.5" />
+                <p className="text-xs text-gray-600">{issue}</p>
+              </li>
             ))}
-          </div>
-        )}
+          </ul>
+        </div>
 
-        {/* Questions to ask */}
-        {briefing.questionsToAsk.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Questions to Ask Your Advisor
-              </p>
-            </div>
+        {/* Questions */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              Questions to Ask
+            </span>
+          </div>
+          <ul className="space-y-2">
             {briefing.questionsToAsk.map((q, i) => (
-              <div key={i} className="flex items-start gap-2 pl-5">
+              <li key={i} className="flex items-start gap-2">
                 <div className="w-1 h-1 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
-                <p className="text-xs text-muted-foreground">{q}</p>
-              </div>
+                <p className="text-xs text-gray-600">{q}</p>
+              </li>
             ))}
-          </div>
-        )}
+          </ul>
+        </div>
 
-        {/* Documents to gather */}
-        {briefing.documentsToGather.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <FolderOpen className="w-3.5 h-3.5 text-emerald-400" />
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Documents to Gather
-              </p>
-            </div>
-            {briefing.documentsToGather.map((doc, i) => (
-              <div key={i} className="flex items-start gap-2 pl-5">
-                <div className="w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0 mt-1.5" />
-                <p className="text-xs text-muted-foreground">{doc}</p>
-              </div>
-            ))}
+        {/* Documents */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <FolderOpen
+              className="w-3.5 h-3.5 flex-shrink-0"
+              style={{ color: "var(--ws-green)" }}
+            />
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              Documents to Gather
+            </span>
           </div>
-        )}
-      </CardContent>
-    </Card>
+          <ul className="space-y-2">
+            {briefing.documentsToGather.map((doc, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <div
+                  className="w-1 h-1 rounded-full flex-shrink-0 mt-1.5"
+                  style={{ background: "var(--ws-green)" }}
+                />
+                <p className="text-xs text-gray-600">{doc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }

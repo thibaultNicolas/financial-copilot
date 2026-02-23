@@ -1,9 +1,7 @@
 import OpenAI from "openai";
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("OPENAI_API_KEY is missing from .env.local");
-}
-
+// Don't throw at build time so Vercel build can succeed without .env.local.
+// The API route checks OPENAI_API_KEY at request time and returns 503 if missing.
 export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY ?? "",
 });

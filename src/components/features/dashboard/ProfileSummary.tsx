@@ -1,4 +1,5 @@
 import type { UserProfile } from "@/types";
+import { formatCurrency } from "@/lib/utils/format";
 
 type Props = {
   profile: Partial<UserProfile>;
@@ -53,7 +54,7 @@ export function ProfileSummary({ profile }: Props) {
             <p className="text-xs text-gray-400 mb-2">{stat.label}</p>
             <p className="text-xl font-bold font-numeric">
               {stat.prefix}
-              {stat.value.toLocaleString()}
+              {formatCurrency(stat.value)}
             </p>
           </div>
         ))}

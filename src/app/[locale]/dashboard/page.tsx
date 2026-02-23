@@ -14,7 +14,8 @@ import { LoadingRecommendations } from "@/components/features/dashboard/LoadingR
 import { LanguageToggle } from "@/components/features/LanguageToggle";
 import { useProfileStore } from "@/store/profile";
 import { useRecommendationsStore } from "@/store/recommendations";
-import Link from "next/link";
+import { formatCurrency } from "@/lib/utils/format";
+import { Link } from "@/i18n/navigation";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -162,7 +163,7 @@ export default function DashboardPage() {
                   className="text-3xl font-bold font-numeric"
                   style={{ color: "var(--ws-green)" }}
                 >
-                  +${report.totalEstimatedImpact.toLocaleString()}
+                  +${formatCurrency(report.totalEstimatedImpact)}
                 </p>
               </div>
             </div>

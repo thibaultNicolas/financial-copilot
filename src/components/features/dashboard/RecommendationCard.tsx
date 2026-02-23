@@ -5,6 +5,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/format";
 import type { Recommendation } from "@/types";
 
 type Props = {
@@ -77,7 +78,7 @@ export function RecommendationCard({ recommendation: rec, rank }: Props) {
             className="text-lg font-bold font-numeric"
             style={{ color: "var(--ws-green)" }}
           >
-            +${rec.estimatedImpact.toLocaleString()}
+            +${formatCurrency(rec.estimatedImpact)}
           </p>
           <p
             className="text-xs font-medium mt-0.5"

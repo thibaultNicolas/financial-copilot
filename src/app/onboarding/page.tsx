@@ -3,6 +3,7 @@
 import { StepIndicator } from "@/components/features/onboarding/StepIndicator";
 import { Step1Income } from "@/components/features/onboarding/Step1Income";
 import { Step2Accounts } from "@/components/features/onboarding/Step2Accounts";
+import { Step3RealEstate } from "@/components/features/onboarding/Step3RealEstate";
 import { useProfileStore } from "@/store/profile";
 
 export default function OnboardingPage() {
@@ -31,16 +32,7 @@ export default function OnboardingPage() {
           <Step2Accounts onNext={nextStep} onBack={prevStep} />
         )}
         {currentStep === 3 && (
-          <div className="text-center text-muted-foreground py-20">
-            Step 3 — Real Estate (coming soon)
-            <br />
-            <button
-              onClick={prevStep}
-              className="text-emerald-400 mt-4 text-sm underline"
-            >
-              ← Back
-            </button>
-          </div>
+          <Step3RealEstate onNext={nextStep} onBack={prevStep} />
         )}
         {currentStep === 4 && (
           <div className="text-center text-muted-foreground py-20">

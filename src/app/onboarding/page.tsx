@@ -2,6 +2,7 @@
 
 import { StepIndicator } from "@/components/features/onboarding/StepIndicator";
 import { Step1Income } from "@/components/features/onboarding/Step1Income";
+import { Step2Accounts } from "@/components/features/onboarding/Step2Accounts";
 import { useProfileStore } from "@/store/profile";
 
 export default function OnboardingPage() {
@@ -9,7 +10,6 @@ export default function OnboardingPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Nav */}
       <nav className="border-b border-border px-6 py-4">
         <span className="text-lg font-bold tracking-tight">
           Financial Copilot
@@ -17,7 +17,6 @@ export default function OnboardingPage() {
       </nav>
 
       <div className="max-w-2xl mx-auto px-6 py-10 space-y-8">
-        {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-bold">Build your financial profile</h1>
           <p className="text-muted-foreground text-sm">
@@ -25,22 +24,11 @@ export default function OnboardingPage() {
           </p>
         </div>
 
-        {/* Step Indicator */}
         <StepIndicator currentStep={currentStep} />
 
-        {/* Step Content */}
         {currentStep === 1 && <Step1Income onNext={nextStep} />}
         {currentStep === 2 && (
-          <div className="text-center text-muted-foreground py-20">
-            Step 2 — Accounts (coming soon)
-            <br />
-            <button
-              onClick={prevStep}
-              className="text-emerald-400 mt-4 text-sm underline"
-            >
-              ← Back
-            </button>
-          </div>
+          <Step2Accounts onNext={nextStep} onBack={prevStep} />
         )}
         {currentStep === 3 && (
           <div className="text-center text-muted-foreground py-20">

@@ -2,77 +2,32 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { RefreshCw, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ProfileSummary } from "@/components/features/dashboard/ProfileSummary";
 import { RecommendationCard } from "@/components/features/dashboard/RecommendationCard";
 import { AdvisorBriefing } from "@/components/features/dashboard/AdvisorBriefing";
 import { LoadingRecommendations } from "@/components/features/dashboard/LoadingRecommendations";
 import { useProfileStore } from "@/store/profile";
-import { useRecommendationsStore } from "@/store/recommendations";
+import { useGenerateRecommendations } from "@/hooks/useGenerateRecommendations";
 
 export default function DashboardPage() {
   const router = useRouter();
   const { profile, resetProfile } = useProfileStore();
   const {
-    report,
+    generateRecommendations,
     isLoading,
     error,
-    setReport,
-    setLoading,
-    setError,
+    report,
     clearReport,
-  } = useRecommendationsStore();
+  } = useGenerateRecommendations({ autoGenerate: true });
 
-  // Redirect if no profile
   useEffect(() => {
     if (!profile?.firstName) {
       router.push("/onboarding");
     }
   }, [profile, router]);
-
-  // Auto-generate on first load
-  useEffect(() => {
-    if (profile?.firstName && !report && !isLoading) {
-      generateRecommendations();
-    }
-  }, [profile]);
-
-  const generateRecommendations = async () => {
-    if (!profile) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch("/api/recommendations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profile }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error ?? "Failed to generate recommendations");
-      }
-
-      const data = await response.json();
-      setReport(data);
-      toast.success(
-        `${data.recommendations.length} recommendations generated!`,
-      );
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Something went wrong";
-      setError(message);
-      toast.error(message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleReset = () => {
     resetProfile();

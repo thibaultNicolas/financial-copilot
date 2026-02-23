@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Trash2, Home, Building2 } from "lucide-react";
@@ -25,13 +25,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useProfileStore } from "@/store/profile";
 import type { RealEstate } from "@/types";
+import { realEstateTypeEnum } from "@/lib/validation/profileSchema";
 
 // ============================================
 // SCHEMA
 // ============================================
 
-const realEstateSchema = z.object({
-  type: z.enum(["PRIMARY_RESIDENCE", "RENTAL"]),
+const realEstateFormSchema = z.object({
+  type: realEstateTypeEnum,
   estimatedValue: z.coerce.number().min(1, "Required"),
   mortgageBalance: z.coerce.number().min(0),
   mortgageRate: z.coerce.number().min(0).max(20),
@@ -46,7 +47,7 @@ const realEstateSchema = z.object({
   maintenanceAnnual: z.coerce.number().min(0).optional(),
 });
 
-type RealEstateForm = z.infer<typeof realEstateSchema>;
+type RealEstateForm = z.infer<typeof realEstateFormSchema>;
 
 // ============================================
 // PROPS
@@ -77,7 +78,7 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
     reset,
     formState: { errors },
   } = useForm<RealEstateForm>({
-    resolver: zodResolver(realEstateSchema),
+    resolver: zodResolver(realEstateFormSchema) as Resolver<RealEstateForm>,
     defaultValues: {
       type: "PRIMARY_RESIDENCE",
       estimatedValue: 0,

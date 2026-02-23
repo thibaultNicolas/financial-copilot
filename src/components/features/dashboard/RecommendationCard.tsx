@@ -2,19 +2,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AlertTriangle, CheckCircle2, ExternalLink, UserCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { RECOMMENDATION_CATEGORY_COLORS } from '@/lib/constants'
 import type { Recommendation } from '@/types'
 
 type Props = {
   recommendation: Recommendation
   rank: number
-}
-
-const CATEGORY_COLORS: Record<Recommendation['category'], string> = {
-  TAX:        'bg-red-500/10 text-red-400 border-red-500/20',
-  SAVINGS:    'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  INVESTMENT: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  PROTECTION: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  PLANNING:   'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
 }
 
 export function RecommendationCard({ recommendation: rec, rank }: Props) {
@@ -39,7 +32,7 @@ export function RecommendationCard({ recommendation: rec, rank }: Props) {
             <div className="space-y-1">
               <h3 className="text-sm font-semibold leading-tight">{rec.title}</h3>
               <div className="flex items-center gap-2 flex-wrap">
-                <Badge className={CATEGORY_COLORS[rec.category]}>
+                <Badge className={RECOMMENDATION_CATEGORY_COLORS[rec.category]}>
                   {rec.category}
                 </Badge>
 
@@ -95,7 +88,7 @@ export function RecommendationCard({ recommendation: rec, rank }: Props) {
         {rec.sources.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
             {rec.sources.map((source, i) => (
-              
+              <a
                 key={i}
                 href={source.url ?? '#'}
                 target="_blank"

@@ -1,6 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, Building2, Wallet, TrendingUp } from "lucide-react";
+import {
+  totalAnnualIncome,
+  totalRegisteredAssets,
+  totalRealEstateEquity,
+  netWorthEstimate,
+} from "@/lib/calculations";
 import type { UserProfile } from "@/types";
 
 type Props = {
@@ -8,21 +14,10 @@ type Props = {
 };
 
 export function ProfileSummary({ profile }: Props) {
-  const totalIncome =
-    (profile.income?.employment?.grossAnnualSalary ?? 0) +
-    (profile.income?.freelance?.estimatedAnnualRevenue ?? 0) +
-    (profile.income?.rental?.units ?? 0) *
-      (profile.income?.rental?.monthlyRentPerUnit ?? 0) *
-      12;
-
-  const totalAssets =
-    profile.accounts?.reduce((sum, a) => sum + a.currentBalance, 0) ?? 0;
-
-  const totalEquity =
-    profile.realEstate?.reduce(
-      (sum, r) => sum + (r.estimatedValue - r.mortgageBalance),
-      0,
-    ) ?? 0;
+  const totalIncome = totalAnnualIncome(profile);
+  const totalAssets = totalRegisteredAssets(profile);
+  const totalEquity = totalRealEstateEquity(profile);
+  const netWorth = netWorthEstimate(profile);
 
   const stats = [
     {
@@ -43,7 +38,7 @@ export function ProfileSummary({ profile }: Props) {
     {
       icon: <TrendingUp className="w-4 h-4 text-orange-400" />,
       label: "Net Worth Estimate",
-      value: `$${(totalAssets + totalEquity).toLocaleString()}`,
+      value: `$${netWorth.toLocaleString()}`,
     },
   ];
 

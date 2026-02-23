@@ -21,7 +21,7 @@ This system is deliberately designed around one core principle:
 
 - **Frontend**: Next.js 16 + React 19 + TypeScript + Tailwind CSS 4 + shadcn/ui
 - **Backend**: Next.js App Router API Routes
-- **AI**: OpenAI GPT-4o
+- **AI**: OpenAI GPT-4o-mini
 - **Validation**: Zod
 - **State**: Zustand
 - **Forms**: React Hook Form

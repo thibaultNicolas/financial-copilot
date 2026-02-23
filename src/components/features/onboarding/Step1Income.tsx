@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -22,12 +22,13 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useProfileStore } from "@/store/profile";
+import { provinceEnum, filingStatusEnum } from "@/lib/validation/profileSchema";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required"),
   age: z.coerce.number().min(18).max(100),
-  province: z.enum(["QC", "ON", "BC", "AB", "OTHER"]),
-  filingStatus: z.enum(["SINGLE", "COMMON_LAW", "MARRIED"]),
+  province: provinceEnum,
+  filingStatus: filingStatusEnum,
   hasPartner: z.boolean(),
   partnerIncome: z.coerce.number().min(0).optional(),
   grossAnnualSalary: z.coerce.number().min(0, "Required"),
@@ -58,7 +59,7 @@ export function Step1Income({ onNext }: Props) {
     setValue,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as Resolver<FormData>,
     defaultValues: {
       firstName: profile?.firstName ?? "",
       age: profile?.age ?? undefined,

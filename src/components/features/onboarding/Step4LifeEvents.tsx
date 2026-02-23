@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -36,6 +36,10 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useProfileStore } from "@/store/profile";
 import type { LifeEvent } from "@/types";
+import {
+  lifeEventTypeEnum,
+  priorityEnum,
+} from "@/lib/validation/profileSchema";
 
 // ============================================
 // LIFE EVENT CONFIG
@@ -92,15 +96,15 @@ const EVENT_CONFIG: Record<
 // SCHEMA
 // ============================================
 
-const lifeEventSchema = z.object({
-  type: z.enum(["MARRIAGE", "CHILD", "RENOVATION", "TRAVEL", "CAR", "OTHER"]),
+const lifeEventFormSchema = z.object({
+  type: lifeEventTypeEnum,
   label: z.string().min(1, "Required"),
   estimatedYear: z.coerce.number().min(2025).max(2050),
   estimatedCost: z.coerce.number().min(0),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  priority: priorityEnum,
 });
 
-type LifeEventForm = z.infer<typeof lifeEventSchema>;
+type LifeEventForm = z.infer<typeof lifeEventFormSchema>;
 
 // ============================================
 // MONTHLY BUDGET SCHEMA
@@ -150,7 +154,7 @@ export function Step4LifeEvents({ onBack }: Props) {
     setValue: setEventValue,
     formState: { errors: eventErrors },
   } = useForm<LifeEventForm>({
-    resolver: zodResolver(lifeEventSchema),
+    resolver: zodResolver(lifeEventFormSchema) as Resolver<LifeEventForm>,
     defaultValues: {
       type: "MARRIAGE",
       label: "",
@@ -166,7 +170,7 @@ export function Step4LifeEvents({ onBack }: Props) {
     handleSubmit: handleBudgetSubmit,
     formState: { errors: budgetErrors },
   } = useForm<BudgetForm>({
-    resolver: zodResolver(budgetSchema),
+    resolver: zodResolver(budgetSchema) as Resolver<BudgetForm>,
     defaultValues: {
       fixedExpenses: profile?.monthlyBudget?.fixedExpenses ?? 0,
       variableExpenses: profile?.monthlyBudget?.variableExpenses ?? 0,

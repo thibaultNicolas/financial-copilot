@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Plus, Trash2 } from "lucide-react";
@@ -25,6 +25,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useProfileStore } from "@/store/profile";
 import type { Account } from "@/types";
+import { accountTypeEnum } from "@/lib/validation/profileSchema";
 
 // ============================================
 // ACCOUNT TYPE CONFIG
@@ -70,14 +71,14 @@ const ACCOUNT_CONFIG: Record<
 // SCHEMA
 // ============================================
 
-const accountSchema = z.object({
-  type: z.enum(["CELI", "REER", "CRI", "FHSA", "NON_REGISTERED", "CRYPTO"]),
+const accountFormSchema = z.object({
+  type: accountTypeEnum,
   currentBalance: z.coerce.number().min(0, "Required"),
   contributionRoom: z.coerce.number().min(0).optional(),
   institution: z.string().optional(),
 });
 
-type AccountForm = z.infer<typeof accountSchema>;
+type AccountForm = z.infer<typeof accountFormSchema>;
 
 // ============================================
 // PROPS
@@ -105,7 +106,7 @@ export function Step2Accounts({ onNext, onBack }: Props) {
     reset,
     formState: { errors },
   } = useForm<AccountForm>({
-    resolver: zodResolver(accountSchema),
+    resolver: zodResolver(accountFormSchema) as Resolver<AccountForm>,
     defaultValues: { type: "CELI", currentBalance: 0, contributionRoom: 0 },
   });
 

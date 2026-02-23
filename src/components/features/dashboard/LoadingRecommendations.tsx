@@ -23,7 +23,7 @@ export function LoadingRecommendations() {
           Analyzing your financial profile
         </h2>
         <p className="text-sm text-muted-foreground">
-          GPT-4o is reviewing your complete situation
+          GPT-4o-mini is reviewing your complete situation
         </p>
       </div>
 

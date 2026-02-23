@@ -1,0 +1,203 @@
+{
+  "nav": {
+    "tagline": "Wealthsimple AI Builders Submission",
+    "getStarted": "Get started"
+  },
+  "home": {
+    "badge": "AI recommends · Humans decide",
+    "title1": "Your money,",
+    "title2": "finally optimized.",
+    "subtitle": "Financial Copilot analyzes your complete Canadian financial picture — employment, freelance, rental income, all your accounts — and tells you exactly what to do next, in order of impact.",
+    "cta": "Analyze my finances",
+    "stats": {
+      "income": "3 income",
+      "incomeSub": "sources analyzed simultaneously",
+      "savings": "$14,800+",
+      "savingsSub": "average annual tax savings identified",
+      "rules": "100%",
+      "rulesSub": "Canadian tax rules, verified 2026"
+    },
+    "features": {
+      "title": "Built for real complexity",
+      "subtitle": "Not just a calculator. A system that thinks about your whole picture.",
+      "boundary": {
+        "title": "Clear human/AI boundary",
+        "description": "The system knows exactly what it can recommend confidently, and when to hand off to a human advisor. Every recommendation shows its confidence score."
+      },
+      "tax": {
+        "title": "Canadian tax rules 2026",
+        "description": "RRSP, TFSA, FHSA, CRI, Quebec provincial brackets — all verified against CRA and Revenu Québec. No hallucinated figures."
+      },
+      "multi": {
+        "title": "Multi-income optimization",
+        "description": "Employment salary, freelance contracts, rental income — the system optimizes across all sources simultaneously, something no spreadsheet can do."
+      }
+    },
+    "ctaSection": {
+      "title": "Ready to see your financial picture?",
+      "subtitle": "Takes 3 minutes. No account required.",
+      "cta": "Get started — it's free →"
+    },
+    "disclaimer": "For informational purposes only. Not financial advice. Always consult a qualified financial advisor before making financial decisions."
+  },
+  "onboarding": {
+    "steps": {
+      "income": "Income",
+      "accounts": "Accounts",
+      "realEstate": "Real Estate",
+      "lifeEvents": "Life Events"
+    },
+    "step1": {
+      "title": "Tell us about your income",
+      "subtitle": "Employment, freelance, and rental income sources",
+      "personal": {
+        "title": "Personal Information",
+        "subtitle": "Basic profile details",
+        "firstName": "First Name",
+        "age": "Age",
+        "province": "Province",
+        "filingStatus": "Filing Status",
+        "hasPartner": "I have a partner / spouse",
+        "partnerIncome": "Partner Annual Income ($)",
+        "single": "Single",
+        "commonLaw": "Common Law",
+        "married": "Married"
+      },
+      "employment": {
+        "title": "Employment Income",
+        "subtitle": "Your T4 employment details",
+        "employer": "Employer Name",
+        "salary": "Gross Annual Salary ($)"
+      },
+      "freelance": {
+        "title": "Freelance / Self-Employed Income",
+        "subtitle": "Side contracts and self-employment revenue",
+        "hasFreelance": "I have freelance / self-employed income",
+        "revenue": "Estimated Annual Revenue ($)",
+        "gst": "GST/QST registered",
+        "expenses": "Annual Deductible Expenses",
+        "equipment": "Equipment ($)",
+        "software": "Software ($)",
+        "vehicle": "Vehicle ($)",
+        "phone": "Phone ($)",
+        "other": "Other ($)"
+      },
+      "continue": "Continue to Accounts →"
+    },
+    "step2": {
+      "title": "Your accounts & investments",
+      "subtitle": "All registered and non-registered accounts",
+      "empty": "No accounts added yet. Add your registered and non-registered accounts.",
+      "addAccount": "Add Account",
+      "accountType": "Account Type",
+      "balance": "Current Balance ($)",
+      "room": "Contribution Room ($)",
+      "institution": "Institution (optional)",
+      "back": "← Back",
+      "continue": "Continue to Real Estate →"
+    },
+    "step3": {
+      "title": "Your real estate",
+      "subtitle": "Primary residence and investment properties",
+      "empty": "No properties added yet. Add your primary residence or rental properties.",
+      "addProperty": "Add Property",
+      "propertyType": "Property Type",
+      "primaryResidence": "Primary Residence",
+      "rentalProperty": "Rental Property",
+      "value": "Estimated Value ($)",
+      "mortgage": "Mortgage Balance ($)",
+      "rate": "Mortgage Rate (%)",
+      "maturity": "Maturity Date (optional)",
+      "rentalSection": "Rental Income & Expenses",
+      "units": "Number of Units",
+      "rent": "Monthly Rent / Unit ($)",
+      "interest": "Mortgage Interest / Year ($)",
+      "tax": "Property Tax / Year ($)",
+      "insurance": "Insurance / Year ($)",
+      "maintenance": "Maintenance / Year ($)",
+      "back": "← Back",
+      "continue": "Continue to Life Events →"
+    },
+    "step4": {
+      "title": "Life events & budget",
+      "subtitle": "Upcoming major expenses and monthly spending",
+      "lifeEvents": {
+        "title": "Upcoming Life Events",
+        "subtitle": "Add major expenses you're planning in the next few years",
+        "addEvent": "Add Life Event",
+        "eventType": "Event Type",
+        "label": "Label",
+        "labelPlaceholder": "Wedding in Charlevoix",
+        "year": "Estimated Year",
+        "cost": "Estimated Cost ($)",
+        "priority": "Priority",
+        "priorityHigh": "High — Must happen",
+        "priorityMedium": "Medium — Likely",
+        "priorityLow": "Low — Nice to have",
+        "add": "Add Event",
+        "cancel": "Cancel"
+      },
+      "budget": {
+        "title": "Monthly Budget",
+        "subtitle": "Your typical monthly spending",
+        "fixed": "Fixed Expenses ($)",
+        "variable": "Variable Expenses ($)",
+        "sports": "Sports & Hobbies ($)",
+        "travel": "Travel ($)",
+        "pet": "Pet Care ($)",
+        "other": "Other ($)"
+      },
+      "family": {
+        "title": "Family Planning",
+        "subtitle": "Current and planned children",
+        "current": "Current Children",
+        "planned": "Planned Children"
+      },
+      "back": "← Back",
+      "generate": "Generate My Recommendations →"
+    }
+  },
+  "dashboard": {
+    "greeting": "Hey {name} 👋",
+    "subtitle": "Here's your AI-powered financial analysis for {province} · Fiscal year 2026",
+    "stats": {
+      "income": "Annual income",
+      "assets": "Registered assets",
+      "equity": "Real estate equity",
+      "netWorth": "Net worth estimate"
+    },
+    "recommendations": {
+      "title": "Your recommendations",
+      "subtitle": "Fiscal year {year} · {count} actions identified",
+      "impact": "Total estimated impact",
+      "aiLabel": "AI recommendation",
+      "advisorLabel": "Advisor required",
+      "advisorRequired": "Advisor Required",
+      "confidence": "{score}% confidence"
+    },
+    "advisor": {
+      "title": "Ready for your advisor",
+      "briefingTitle": "Advisor Briefing",
+      "complexIssues": "Complex Issues",
+      "questions": "Questions to Ask",
+      "documents": "Documents to Gather",
+      "urgencyLow": "Low urgency",
+      "urgencyMedium": "Medium urgency",
+      "urgencyHigh": "High urgency"
+    },
+    "actions": {
+      "regenerate": "Regenerate",
+      "startOver": "Start over"
+    },
+    "loading": {
+      "title": "Analyzing your financial profile",
+      "subtitle": "GPT-4o is reviewing your complete situation",
+      "step1": "Analyzing your income sources...",
+      "step2": "Calculating tax optimization opportunities...",
+      "step3": "Evaluating contribution room across accounts...",
+      "step4": "Assessing life event impact on cash flow...",
+      "step5": "Generating prioritized recommendations..."
+    },
+    "disclaimer": "This analysis is for informational purposes only and does not constitute financial advice. Tax rules reference: Canada Revenue Agency & Revenu Québec {year}. Always consult a qualified financial advisor before making financial decisions."
+  }
+}

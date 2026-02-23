@@ -80,6 +80,11 @@ const accountFormSchema = z.object({
 
 type AccountForm = z.infer<typeof accountFormSchema>;
 
+/** Generate a unique id (used in event handlers only, not during render). */
+function generateAccountId(): string {
+  return `account-${Date.now()}`;
+}
+
 // ============================================
 // PROPS
 // ============================================
@@ -115,7 +120,7 @@ export function Step2Accounts({ onNext, onBack }: Props) {
   // Add account to list
   const onAddAccount = (data: AccountForm) => {
     const newAccount: Account = {
-      id: `account-${Date.now()}`,
+      id: generateAccountId(),
       type: selectedType,
       currentBalance: data.currentBalance,
       contributionRoom: hasRoom ? data.contributionRoom : undefined,

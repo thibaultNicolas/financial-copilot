@@ -49,6 +49,11 @@ const realEstateFormSchema = z.object({
 
 type RealEstateForm = z.infer<typeof realEstateFormSchema>;
 
+/** Generate a unique id (used in event handlers only, not during render). */
+function generatePropertyId(): string {
+  return `property-${Date.now()}`;
+}
+
 // ============================================
 // PROPS
 // ============================================
@@ -93,7 +98,7 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
   // Add property
   const onAddProperty = (data: RealEstateForm) => {
     const newProperty: RealEstate = {
-      id: `property-${Date.now()}`,
+      id: generatePropertyId(),
       type: selectedType,
       estimatedValue: data.estimatedValue,
       mortgageBalance: data.mortgageBalance,
@@ -102,11 +107,11 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
       isOwnerOccupied: selectedType === "PRIMARY_RESIDENCE",
     };
 
-    // If rental, also save to income
-    if (isRental) {
+    // If rental, also save to income (only when profile.income exists from step 1)
+    if (isRental && profile?.income) {
       updateProfile({
         income: {
-          ...profile?.income!,
+          ...profile.income,
           rental: {
             units: data.units ?? 1,
             monthlyRentPerUnit: data.monthlyRentPerUnit ?? 0,

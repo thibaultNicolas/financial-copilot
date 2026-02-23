@@ -1,28 +1,28 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Shield, Flag, GitMerge } from "lucide-react";
-
-const features = [
-  {
-    icon: <Shield className="w-6 h-6" style={{ color: "var(--ws-green)" }} />,
-    title: "Clear human/AI boundary",
-    description:
-      "The system knows exactly what it can recommend confidently, and when to hand off to a human advisor. Every recommendation shows its confidence score.",
-  },
-  {
-    icon: <Flag className="w-6 h-6" style={{ color: "var(--ws-green)" }} />,
-    title: "Canadian tax rules 2026",
-    description:
-      "RRSP, TFSA, FHSA, CRI, Quebec provincial brackets — all verified against CRA and Revenu Québec. No hallucinated figures.",
-  },
-  {
-    icon: <GitMerge className="w-6 h-6" style={{ color: "var(--ws-green)" }} />,
-    title: "Multi-income optimization",
-    description:
-      "Employment salary, freelance contracts, rental income — the system optimizes across all sources simultaneously, something no spreadsheet can do.",
-  },
-];
+import { LanguageToggle } from "@/components/features/LanguageToggle";
 
 export default function HomePage() {
+  const t = useTranslations();
+
+  const features = [
+    {
+      icon: <Shield className="w-6 h-6" style={{ color: "var(--ws-green)" }} />,
+      key: "boundary",
+    },
+    {
+      icon: <Flag className="w-6 h-6" style={{ color: "var(--ws-green)" }} />,
+      key: "tax",
+    },
+    {
+      icon: (
+        <GitMerge className="w-6 h-6" style={{ color: "var(--ws-green)" }} />
+      ),
+      key: "multi",
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-white">
       {/* Nav */}
@@ -40,15 +40,18 @@ export default function HomePage() {
             </span>
           </div>
           <span className="text-xs text-gray-400 hidden sm:block">
-            Wealthsimple AI Builders Submission
+            {t("nav.tagline")}
           </span>
-          <Link
-            href="/onboarding"
-            className="cursor-pointer text-sm font-semibold px-5 py-2 rounded-full text-white transition-all hover:opacity-90 hover:scale-105"
-            style={{ background: "var(--ws-green)" }}
-          >
-            Get started
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <Link
+              href="/onboarding"
+              className="cursor-pointer text-sm font-semibold px-5 py-2 rounded-full text-white transition-all hover:opacity-90 hover:scale-105"
+              style={{ background: "var(--ws-green)" }}
+            >
+              {t("nav.getStarted")}
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -65,22 +68,20 @@ export default function HomePage() {
             className="w-1.5 h-1.5 rounded-full animate-pulse-green inline-block"
             style={{ background: "var(--ws-green)" }}
           />
-          AI recommends · Humans decide
+          {t("home.badge")}
         </div>
 
         <h1
           className="text-6xl md:text-7xl font-bold tracking-tight mb-6 animate-fade-up delay-100"
           style={{ color: "var(--ws-gray-900)" }}
         >
-          Your money,
+          {t("home.title1")}
           <br />
-          <span style={{ color: "var(--ws-green)" }}>finally optimized.</span>
+          <span style={{ color: "var(--ws-green)" }}>{t("home.title2")}</span>
         </h1>
 
         <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up delay-200">
-          Financial Copilot analyzes your complete Canadian financial picture —
-          employment, freelance, rental income, all your accounts — and tells
-          you exactly what to do next, in order of impact.
+          {t("home.subtitle")}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up delay-300">
@@ -89,34 +90,25 @@ export default function HomePage() {
             className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-white font-semibold text-base shadow-lg hover:opacity-90 hover:shadow-xl hover:scale-105 transition-all"
             style={{ background: "var(--ws-green)" }}
           >
-            Analyze my finances
-            <span>→</span>
+            {t("home.cta")} →
           </Link>
         </div>
       </section>
 
-      {/* Stats bar */}
+      {/* Stats */}
       <section
         style={{ background: "var(--ws-gray-50)" }}
         className="border-y border-gray-100 py-12 animate-fade-up delay-400"
       >
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-3 gap-8 text-center">
           {[
+            { value: t("home.stats.income"), label: t("home.stats.incomeSub") },
             {
-              value: "3 income",
-              label: "sources analyzed simultaneously",
-              mono: false,
-            },
-            {
-              value: "$14,800+",
-              label: "average annual tax savings identified",
+              value: t("home.stats.savings"),
+              label: t("home.stats.savingsSub"),
               mono: true,
             },
-            {
-              value: "100%",
-              label: "Canadian tax rules, verified 2026",
-              mono: false,
-            },
+            { value: t("home.stats.rules"), label: t("home.stats.rulesSub") },
           ].map((stat) => (
             <div key={stat.label}>
               <div
@@ -134,17 +126,16 @@ export default function HomePage() {
       {/* Features */}
       <section className="max-w-5xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Built for real complexity</h2>
-          <p className="text-gray-500 text-lg">
-            Not just a calculator. A system that thinks about your whole
-            picture.
-          </p>
+          <h2 className="text-4xl font-bold mb-4">
+            {t("home.features.title")}
+          </h2>
+          <p className="text-gray-500 text-lg">{t("home.features.subtitle")}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature) => (
             <div
-              key={feature.title}
+              key={feature.key}
               className="p-8 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all group"
               style={{ background: "white" }}
             >
@@ -155,10 +146,10 @@ export default function HomePage() {
                 {feature.icon}
               </div>
               <h3 className="text-lg font-semibold mb-2 group-hover:text-[var(--ws-green)] transition-colors">
-                {feature.title}
+                {t(`home.features.${feature.key}.title`)}
               </h3>
               <p className="text-gray-500 text-sm leading-relaxed">
-                {feature.description}
+                {t(`home.features.${feature.key}.description`)}
               </p>
             </div>
           ))}
@@ -172,27 +163,22 @@ export default function HomePage() {
       >
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-white mb-4">
-            Ready to see your financial picture?
+            {t("home.ctaSection.title")}
           </h2>
-          <p className="text-gray-400 mb-8">
-            Takes 3 minutes. No account required.
-          </p>
+          <p className="text-gray-400 mb-8">{t("home.ctaSection.subtitle")}</p>
           <Link
             href="/onboarding"
             className="cursor-pointer inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-base hover:opacity-90 hover:scale-105 transition-all"
             style={{ background: "var(--ws-green)", color: "white" }}
           >
-            Get started — it&apos;s free →
+            {t("home.ctaSection.cta")}
           </Link>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-8 px-6 text-center">
-        <p className="text-xs text-gray-400">
-          For informational purposes only. Not financial advice. Always consult
-          a qualified financial advisor before making financial decisions.
-        </p>
+        <p className="text-xs text-gray-400">{t("home.disclaimer")}</p>
       </footer>
     </main>
   );

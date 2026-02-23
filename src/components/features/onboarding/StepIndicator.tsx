@@ -1,23 +1,23 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type Step = {
-  number: number;
-  label: string;
-};
-
-const STEPS: Step[] = [
-  { number: 1, label: "Income" },
-  { number: 2, label: "Accounts" },
-  { number: 3, label: "Real Estate" },
-  { number: 4, label: "Life Events" },
-];
 
 type Props = {
   currentStep: number;
 };
 
 export function StepIndicator({ currentStep }: Props) {
+  const t = useTranslations("onboarding.steps");
+
+  const STEPS = [
+    { number: 1, label: t("income") },
+    { number: 2, label: t("accounts") },
+    { number: 3, label: t("realEstate") },
+    { number: 4, label: t("lifeEvents") },
+  ];
+
   return (
     <div className="flex items-center justify-center gap-0">
       {STEPS.map((step, index) => {

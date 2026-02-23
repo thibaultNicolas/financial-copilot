@@ -1,0 +1,203 @@
+{
+  "nav": {
+    "tagline": "Soumission Wealthsimple AI Builders",
+    "getStarted": "Commencer"
+  },
+  "home": {
+    "badge": "L'IA recommande · L'humain décide",
+    "title1": "Votre argent,",
+    "title2": "enfin optimisé.",
+    "subtitle": "Financial Copilot analyse votre situation financière canadienne complète — emploi, freelance, revenus locatifs, tous vos comptes — et vous dit exactement quoi faire, dans l'ordre d'impact.",
+    "cta": "Analyser mes finances",
+    "stats": {
+      "income": "3 sources",
+      "incomeSub": "de revenus analysées simultanément",
+      "savings": "14 800 $+",
+      "savingsSub": "d'économies fiscales annuelles identifiées en moyenne",
+      "rules": "100 %",
+      "rulesSub": "Règles fiscales canadiennes, vérifiées 2026"
+    },
+    "features": {
+      "title": "Conçu pour la vraie complexité",
+      "subtitle": "Pas juste une calculatrice. Un système qui pense à toute votre situation.",
+      "boundary": {
+        "title": "Frontière humain/IA claire",
+        "description": "Le système sait exactement ce qu'il peut recommander avec confiance, et quand transférer à un conseiller humain. Chaque recommandation affiche son score de confiance."
+      },
+      "tax": {
+        "title": "Règles fiscales canadiennes 2026",
+        "description": "REER, CELI, CELIAPP, CRI, paliers provinciaux québécois — tous vérifiés contre l'ARC et Revenu Québec. Aucune donnée inventée."
+      },
+      "multi": {
+        "title": "Optimisation multi-revenus",
+        "description": "Salaire d'emploi, contrats freelance, revenus locatifs — le système optimise toutes les sources simultanément, ce qu'aucun tableur ne peut faire."
+      }
+    },
+    "ctaSection": {
+      "title": "Prêt à voir votre portrait financier?",
+      "subtitle": "3 minutes. Aucun compte requis.",
+      "cta": "Commencer — c'est gratuit →"
+    },
+    "disclaimer": "À titre informatif seulement. Ne constitue pas un conseil financier. Consultez toujours un conseiller financier qualifié avant de prendre des décisions financières."
+  },
+  "onboarding": {
+    "steps": {
+      "income": "Revenus",
+      "accounts": "Comptes",
+      "realEstate": "Immobilier",
+      "lifeEvents": "Événements"
+    },
+    "step1": {
+      "title": "Parlez-nous de vos revenus",
+      "subtitle": "Emploi, freelance et revenus locatifs",
+      "personal": {
+        "title": "Informations personnelles",
+        "subtitle": "Détails de base de votre profil",
+        "firstName": "Prénom",
+        "age": "Âge",
+        "province": "Province",
+        "filingStatus": "Statut fiscal",
+        "hasPartner": "J'ai un(e) partenaire / conjoint(e)",
+        "partnerIncome": "Revenu annuel du partenaire ($)",
+        "single": "Célibataire",
+        "commonLaw": "Conjoint de fait",
+        "married": "Marié(e)"
+      },
+      "employment": {
+        "title": "Revenu d'emploi",
+        "subtitle": "Vos informations d'emploi T4",
+        "employer": "Nom de l'employeur",
+        "salary": "Salaire annuel brut ($)"
+      },
+      "freelance": {
+        "title": "Revenu freelance / travailleur autonome",
+        "subtitle": "Contrats et revenus d'auto-emploi",
+        "hasFreelance": "J'ai des revenus freelance / travailleur autonome",
+        "revenue": "Revenus annuels estimés ($)",
+        "gst": "Inscrit aux TPS/TVQ",
+        "expenses": "Dépenses déductibles annuelles",
+        "equipment": "Équipement ($)",
+        "software": "Logiciels ($)",
+        "vehicle": "Véhicule ($)",
+        "phone": "Téléphone ($)",
+        "other": "Autre ($)"
+      },
+      "continue": "Continuer vers les comptes →"
+    },
+    "step2": {
+      "title": "Vos comptes et investissements",
+      "subtitle": "Tous vos comptes enregistrés et non enregistrés",
+      "empty": "Aucun compte ajouté. Ajoutez vos comptes enregistrés et non enregistrés.",
+      "addAccount": "Ajouter un compte",
+      "accountType": "Type de compte",
+      "balance": "Solde actuel ($)",
+      "room": "Droits de cotisation ($)",
+      "institution": "Institution (optionnel)",
+      "back": "← Retour",
+      "continue": "Continuer vers l'immobilier →"
+    },
+    "step3": {
+      "title": "Votre immobilier",
+      "subtitle": "Résidence principale et propriétés locatives",
+      "empty": "Aucune propriété ajoutée. Ajoutez votre résidence principale ou vos propriétés locatives.",
+      "addProperty": "Ajouter une propriété",
+      "propertyType": "Type de propriété",
+      "primaryResidence": "Résidence principale",
+      "rentalProperty": "Propriété locative",
+      "value": "Valeur estimée ($)",
+      "mortgage": "Solde hypothécaire ($)",
+      "rate": "Taux hypothécaire (%)",
+      "maturity": "Date d'échéance (optionnel)",
+      "rentalSection": "Revenus et dépenses locatifs",
+      "units": "Nombre d'unités",
+      "rent": "Loyer mensuel / unité ($)",
+      "interest": "Intérêts hypothécaires / an ($)",
+      "tax": "Taxes municipales / an ($)",
+      "insurance": "Assurances / an ($)",
+      "maintenance": "Entretien / an ($)",
+      "back": "← Retour",
+      "continue": "Continuer vers les événements →"
+    },
+    "step4": {
+      "title": "Événements de vie et budget",
+      "subtitle": "Grandes dépenses à venir et dépenses mensuelles",
+      "lifeEvents": {
+        "title": "Événements de vie à venir",
+        "subtitle": "Ajoutez les grandes dépenses que vous planifiez dans les prochaines années",
+        "addEvent": "Ajouter un événement",
+        "eventType": "Type d'événement",
+        "label": "Description",
+        "labelPlaceholder": "Mariage à Charlevoix",
+        "year": "Année estimée",
+        "cost": "Coût estimé ($)",
+        "priority": "Priorité",
+        "priorityHigh": "Haute — Doit arriver",
+        "priorityMedium": "Moyenne — Probable",
+        "priorityLow": "Basse — Souhaitable",
+        "add": "Ajouter",
+        "cancel": "Annuler"
+      },
+      "budget": {
+        "title": "Budget mensuel",
+        "subtitle": "Vos dépenses mensuelles typiques",
+        "fixed": "Dépenses fixes ($)",
+        "variable": "Dépenses variables ($)",
+        "sports": "Sports et loisirs ($)",
+        "travel": "Voyages ($)",
+        "pet": "Animaux ($)",
+        "other": "Autre ($)"
+      },
+      "family": {
+        "title": "Planification familiale",
+        "subtitle": "Enfants actuels et planifiés",
+        "current": "Enfants actuels",
+        "planned": "Enfants planifiés"
+      },
+      "back": "← Retour",
+      "generate": "Générer mes recommandations →"
+    }
+  },
+  "dashboard": {
+    "greeting": "Bonjour {name} 👋",
+    "subtitle": "Voici votre analyse financière IA pour {province} · Année fiscale 2026",
+    "stats": {
+      "income": "Revenu annuel",
+      "assets": "Actifs enregistrés",
+      "equity": "Équité immobilière",
+      "netWorth": "Valeur nette estimée"
+    },
+    "recommendations": {
+      "title": "Vos recommandations",
+      "subtitle": "Année fiscale {year} · {count} actions identifiées",
+      "impact": "Impact total estimé",
+      "aiLabel": "Recommandation IA",
+      "advisorLabel": "Conseiller requis",
+      "advisorRequired": "Conseiller requis",
+      "confidence": "{score}% de confiance"
+    },
+    "advisor": {
+      "title": "Prêt pour votre conseiller",
+      "briefingTitle": "Briefing conseiller",
+      "complexIssues": "Enjeux complexes",
+      "questions": "Questions à poser",
+      "documents": "Documents à rassembler",
+      "urgencyLow": "Urgence faible",
+      "urgencyMedium": "Urgence moyenne",
+      "urgencyHigh": "Urgence élevée"
+    },
+    "actions": {
+      "regenerate": "Régénérer",
+      "startOver": "Recommencer"
+    },
+    "loading": {
+      "title": "Analyse de votre profil financier",
+      "subtitle": "GPT-4o examine votre situation complète",
+      "step1": "Analyse de vos sources de revenus...",
+      "step2": "Calcul des opportunités d'optimisation fiscale...",
+      "step3": "Évaluation des droits de cotisation...",
+      "step4": "Évaluation de l'impact des événements de vie...",
+      "step5": "Génération des recommandations prioritaires..."
+    },
+    "disclaimer": "Cette analyse est à titre informatif seulement et ne constitue pas un conseil financier. Règles fiscales : Agence du revenu du Canada & Revenu Québec {year}. Consultez toujours un conseiller financier qualifié avant de prendre des décisions financières."
+  }
+}

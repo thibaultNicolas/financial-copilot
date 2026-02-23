@@ -123,6 +123,16 @@ const budgetSchema = z.object({
 
 type BudgetForm = z.infer<typeof budgetSchema>;
 
+/** Generate a unique profile id (used in event handlers only, not during render). */
+function generateProfileId(): string {
+  return `profile-${Date.now()}`;
+}
+
+/** Return current ISO timestamp (used in event handlers only, not during render). */
+function getIsoNow(): string {
+  return new Date().toISOString();
+}
+
 // ============================================
 // PROPS
 // ============================================
@@ -216,9 +226,9 @@ export function Step4LifeEvents({ onBack }: Props) {
       },
       numberOfChildren: budgetData.numberOfChildren,
       plannedChildren: budgetData.plannedChildren,
-      id: profile?.id ?? `profile-${Date.now()}`,
-      createdAt: profile?.createdAt ?? new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      id: profile?.id ?? generateProfileId(),
+      createdAt: profile?.createdAt ?? getIsoNow(),
+      updatedAt: getIsoNow(),
     });
 
     toast.success("Profile saved! Generating your recommendations...");

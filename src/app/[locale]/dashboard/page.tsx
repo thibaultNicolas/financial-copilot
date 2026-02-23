@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
 import { RefreshCw, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,12 +11,15 @@ import { ProfileSummary } from "@/components/features/dashboard/ProfileSummary";
 import { RecommendationCard } from "@/components/features/dashboard/RecommendationCard";
 import { AdvisorBriefing } from "@/components/features/dashboard/AdvisorBriefing";
 import { LoadingRecommendations } from "@/components/features/dashboard/LoadingRecommendations";
+import { LanguageToggle } from "@/components/features/LanguageToggle";
 import { useProfileStore } from "@/store/profile";
 import { useRecommendationsStore } from "@/store/recommendations";
 import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("dashboard");
   const { profile, resetProfile } = useProfileStore();
   const {
     report,
@@ -28,8 +32,8 @@ export default function DashboardPage() {
   } = useRecommendationsStore();
 
   useEffect(() => {
-    if (!profile?.firstName) router.push("/onboarding");
-  }, [profile, router]);
+    if (!profile?.firstName) router.push(`/${locale}/onboarding`);
+  }, [profile, router, locale]);
 
   useEffect(() => {
     if (profile?.firstName && !report && !isLoading) generateRecommendations();
@@ -67,7 +71,7 @@ export default function DashboardPage() {
   const handleReset = () => {
     resetProfile();
     clearReport();
-    router.push("/");
+    router.push(`/${locale}`);
   };
 
   if (!profile?.firstName) return null;
@@ -77,7 +81,7 @@ export default function DashboardPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href={`/${locale}`} className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-full flex items-center justify-center"
               style={{ background: "var(--ws-green)" }}
@@ -89,6 +93,7 @@ export default function DashboardPage() {
             </span>
           </Link>
           <div className="flex items-center gap-2">
+            <LanguageToggle />
             {report && (
               <Button
                 variant="outline"
@@ -100,7 +105,7 @@ export default function DashboardPage() {
                 <RefreshCw
                   className={`w-3 h-3 ${isLoading ? "animate-spin" : ""}`}
                 />
-                Regenerate
+                {t("actions.regenerate")}
               </Button>
             )}
             <Button
@@ -110,7 +115,7 @@ export default function DashboardPage() {
               className="gap-2 rounded-full text-gray-400 hover:text-gray-600 text-xs"
             >
               <RotateCcw className="w-3 h-3" />
-              Start over
+              {t("actions.startOver")}
             </Button>
           </div>
         </div>
@@ -137,18 +142,21 @@ export default function DashboardPage() {
 
         {report && !isLoading && (
           <div className="space-y-8 animate-fade-up">
-            {/* Header */}
             <div className="flex items-end justify-between">
               <div>
-                <h2 className="text-2xl font-bold">Your recommendations</h2>
+                <h2 className="text-2xl font-bold">
+                  {t("recommendations.title")}
+                </h2>
                 <p className="text-gray-500 text-sm mt-1">
-                  Fiscal year {report.fiscalYear} ·{" "}
-                  {report.recommendations.length} actions identified
+                  {t("recommendations.subtitle", {
+                    year: report.fiscalYear,
+                    count: report.recommendations.length,
+                  })}
                 </p>
               </div>
               <div className="text-right">
                 <p className="text-xs text-gray-400 mb-1">
-                  Total estimated impact
+                  {t("recommendations.impact")}
                 </p>
                 <p
                   className="text-3xl font-bold font-numeric"
@@ -159,22 +167,20 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Legend */}
             <div className="flex items-center gap-6 text-xs text-gray-400">
               <div className="flex items-center gap-1.5">
                 <div
                   className="w-2 h-2 rounded-full"
                   style={{ background: "var(--ws-green)" }}
                 />
-                AI recommendation
+                {t("recommendations.aiLabel")}
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-amber-400" />
-                Advisor required
+                {t("recommendations.advisorLabel")}
               </div>
             </div>
 
-            {/* Cards */}
             <div className="space-y-4">
               {report.recommendations.map((rec, index) => (
                 <RecommendationCard
@@ -190,23 +196,19 @@ export default function DashboardPage() {
                 <Separator className="bg-gray-100" />
                 <div>
                   <h2 className="text-2xl font-bold mb-6">
-                    Ready for your advisor
+                    {t("advisor.title")}
                   </h2>
                   <AdvisorBriefing briefing={report.advisorBriefing} />
                 </div>
               </>
             )}
 
-            {/* Disclaimer */}
             <div
               className="p-5 rounded-2xl text-center"
               style={{ background: "var(--ws-gray-50)" }}
             >
               <p className="text-xs text-gray-400 leading-relaxed">
-                This analysis is for informational purposes only and does not
-                constitute financial advice. Tax rules reference: Canada Revenue
-                Agency & Revenu Québec {report.fiscalYear}. Always consult a
-                qualified financial advisor before making financial decisions.
+                {t("disclaimer", { year: report.fiscalYear })}
               </p>
             </div>
           </div>

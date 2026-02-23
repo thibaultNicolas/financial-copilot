@@ -1,0 +1,27 @@
+{
+  "fiscalYear": 2026,
+  "validUntil": "2026-12-31",
+  "federal": {
+    "reerLimit": 32490,
+    "celiLimit": 7000,
+    "fhsaLimit": 8000,
+    "fhsaLifetimeLimit": 40000,
+    "basicPersonalAmount": 16129
+  },
+  "federal_brackets": [
+    { "min": 0, "max": 57375, "rate": 0.15 },
+    { "min": 57375, "max": 114750, "rate": 0.205 },
+    { "min": 114750, "max": 158519, "rate": 0.26 },
+    { "min": 158519, "max": 220000, "rate": 0.29 },
+    { "min": 220000, "max": null, "rate": 0.33 }
+  ],
+  "quebec": {
+    "basicPersonalAmount": 17183,
+    "provincialTaxBrackets": [
+      { "min": 0, "max": 51780, "rate": 0.14 },
+      { "min": 51780, "max": 103545, "rate": 0.19 },
+      { "min": 103545, "max": 126000, "rate": 0.24 },
+      { "min": 126000, "max": null, "rate": 0.2575 }
+    ]
+  }
+}

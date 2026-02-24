@@ -103,6 +103,26 @@ h4 {
   animation: pulse-green 2s ease-in-out infinite;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ws-gray-100) 0%,
+    var(--ws-gray-200) 50%,
+    var(--ws-gray-100) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
 /* Stagger delays */
 .delay-100 {
   animation-delay: 100ms;
@@ -160,4 +180,35 @@ input[type="date"]:focus {
 .onboarding-card:hover {
   border-color: #e9ecef;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+/* Custom range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+  border: none !important;
+  background: #e9ecef !important;
+  padding: 0 !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--ws-green);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0, 208, 148, 0.3);
 }

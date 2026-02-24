@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { ProfileSummary } from "@/components/features/dashboard/ProfileSummary";
 import { RecommendationCard } from "@/components/features/dashboard/RecommendationCard";
 import { AdvisorBriefing } from "@/components/features/dashboard/AdvisorBriefing";
+import { TaxSimulator } from "@/components/features/dashboard/TaxSimulator";
 import { LoadingRecommendations } from "@/components/features/dashboard/LoadingRecommendations";
 import { LanguageToggle } from "@/components/features/LanguageToggle";
 import { useProfileStore } from "@/store/profile";
@@ -82,7 +83,7 @@ export default function DashboardPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link href={`/${locale}`} className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-full flex items-center justify-center"
               style={{ background: "var(--ws-green)" }}
@@ -190,6 +191,16 @@ export default function DashboardPage() {
                   rank={index + 1}
                 />
               ))}
+            </div>
+
+            <Separator className="bg-gray-100" />
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Tax Simulator</h2>
+              <p className="text-gray-500 text-sm mb-6">
+                Real calculations using CRA & Revenu Québec 2026 rules — not AI
+                estimates.
+              </p>
+              <TaxSimulator profile={profile} />
             </div>
 
             {report.advisorBriefing && (

@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Shield, Flag, GitMerge } from "lucide-react";
 import { LanguageToggle } from "@/components/features/LanguageToggle";
+import { DemoButton } from "@/components/features/DemoButton";
 
 export default function HomePage() {
   const t = useTranslations();
@@ -92,6 +93,7 @@ export default function HomePage() {
           >
             {t("home.cta")} →
           </Link>
+          <DemoButton label={t("home.demo")} />
         </div>
       </section>
 

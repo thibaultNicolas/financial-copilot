@@ -11,6 +11,7 @@ import { ProfileSummary } from "@/components/features/dashboard/ProfileSummary";
 import { RecommendationCard } from "@/components/features/dashboard/RecommendationCard";
 import { AdvisorBriefing } from "@/components/features/dashboard/AdvisorBriefing";
 import { TaxSimulator } from "@/components/features/dashboard/TaxSimulator";
+import { TaxChat } from "@/components/features/dashboard/TaxChat";
 import { LoadingRecommendations } from "@/components/features/dashboard/LoadingRecommendations";
 import { LanguageToggle } from "@/components/features/LanguageToggle";
 import { useProfileStore } from "@/store/profile";
@@ -201,6 +202,19 @@ export default function DashboardPage() {
                 estimates.
               </p>
               <TaxSimulator profile={profile} />
+            </div>
+
+            <Separator className="bg-gray-100" />
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Ask your financial AI</h2>
+              <p className="text-gray-500 text-sm mb-6">
+                Ask any question about your situation — answers use your real
+                calculated numbers.
+              </p>
+              <TaxChat
+                profile={profile}
+                recommendations={report.recommendations}
+              />
             </div>
 
             {report.advisorBriefing && (

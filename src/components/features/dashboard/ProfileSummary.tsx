@@ -1,5 +1,5 @@
-import type { UserProfile } from "@/types";
 import { formatCurrency } from "@/lib/utils/format";
+import type { UserProfile } from "@/types";
 
 type Props = {
   profile: Partial<UserProfile>;
@@ -23,38 +23,53 @@ export function ProfileSummary({ profile }: Props) {
     ) ?? 0;
 
   const stats = [
-    { label: "Annual income", value: totalIncome, prefix: "$" },
-    { label: "Registered assets", value: totalAssets, prefix: "$" },
-    { label: "Real estate equity", value: totalEquity, prefix: "$" },
+    { label: "Annual income", value: totalIncome, icon: "💼" },
+    { label: "Registered assets", value: totalAssets, icon: "🏦" },
+    { label: "Real estate equity", value: totalEquity, icon: "🏠" },
     {
       label: "Net worth estimate",
       value: totalAssets + totalEquity,
-      prefix: "$",
+      icon: "📈",
     },
   ];
 
   return (
     <div className="space-y-6 animate-fade-up">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          Hey {profile.firstName} 👋
-        </h1>
-        <p className="text-gray-500 mt-1">
-          Here&apos;s your AI-powered financial analysis for {profile.province}{" "}
-          · Fiscal year 2026
-        </p>
+      {/* Greeting */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Hey {profile.firstName} 👋
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            AI-powered financial analysis · {profile.province} · Fiscal year
+            2026
+          </p>
+        </div>
+        <div
+          className="px-3 py-1.5 rounded-full text-xs font-semibold"
+          style={{
+            background: "var(--ws-green-light)",
+            color: "var(--ws-green-dark)",
+          }}
+        >
+          🇨🇦 Canada only
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Stats grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="p-5 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all"
+            className="p-5 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group"
           >
-            <p className="text-xs text-gray-400 mb-2">{stat.label}</p>
-            <p className="text-xl font-bold font-numeric">
-              {stat.prefix}
-              {formatCurrency(stat.value)}
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs text-gray-400">{stat.label}</p>
+              <span className="text-base">{stat.icon}</span>
+            </div>
+            <p className="text-xl font-bold font-numeric text-gray-900">
+              ${formatCurrency(stat.value)}
             </p>
           </div>
         ))}

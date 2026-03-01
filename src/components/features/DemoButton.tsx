@@ -74,7 +74,6 @@ const DEMO_PROFILE: Partial<UserProfile> = {
   ],
   lifeEvents: [
     {
-      id: "1",
       type: "CHILD",
       label: "2 planned children",
       estimatedYear: 2027,

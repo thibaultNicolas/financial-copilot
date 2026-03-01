@@ -15,21 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { useProfileStore } from "@/store/profile";
 import type { Account } from "@/types";
 import { accountTypeEnum } from "@/lib/validation/profileSchema";
 
-// ============================================
-// ACCOUNT TYPE CONFIG
-// ============================================
+const inputClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all";
+const labelClass = "text-sm font-medium text-gray-700 mb-1 block";
+const selectTriggerClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all h-auto min-h-[44px]";
 
 const ACCOUNT_CONFIG: Record<
   Account["type"],
@@ -37,39 +31,35 @@ const ACCOUNT_CONFIG: Record<
 > = {
   CELI: {
     label: "TFSA (CELI)",
-    color: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    color: "bg-blue-500/10 text-blue-600 border border-blue-500/20",
     hasRoom: true,
   },
   REER: {
     label: "RRSP (REER)",
-    color: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+    color: "bg-purple-500/10 text-purple-600 border border-purple-500/20",
     hasRoom: true,
   },
   CRI: {
     label: "LIRA (CRI)",
-    color: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    color: "bg-orange-500/10 text-orange-600 border border-orange-500/20",
     hasRoom: false,
   },
   FHSA: {
     label: "FHSA",
-    color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    color: "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20",
     hasRoom: true,
   },
   NON_REGISTERED: {
     label: "Non-Registered",
-    color: "bg-gray-500/10 text-gray-400 border-gray-500/20",
+    color: "bg-gray-500/10 text-gray-600 border border-gray-500/20",
     hasRoom: false,
   },
   CRYPTO: {
     label: "Crypto",
-    color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
+    color: "bg-yellow-500/10 text-yellow-600 border border-yellow-500/20",
     hasRoom: false,
   },
 };
-
-// ============================================
-// SCHEMA
-// ============================================
 
 const accountFormSchema = z.object({
   type: accountTypeEnum,
@@ -80,23 +70,14 @@ const accountFormSchema = z.object({
 
 type AccountForm = z.infer<typeof accountFormSchema>;
 
-/** Generate a unique id (used in event handlers only, not during render). */
 function generateAccountId(): string {
   return `account-${Date.now()}`;
 }
-
-// ============================================
-// PROPS
-// ============================================
 
 type Props = {
   onNext: () => void;
   onBack: () => void;
 };
-
-// ============================================
-// COMPONENT
-// ============================================
 
 export function Step2Accounts({ onNext, onBack }: Props) {
   const { profile, updateProfile } = useProfileStore();
@@ -117,7 +98,6 @@ export function Step2Accounts({ onNext, onBack }: Props) {
 
   const hasRoom = ACCOUNT_CONFIG[selectedType].hasRoom;
 
-  // Add account to list
   const onAddAccount = (data: AccountForm) => {
     const newAccount: Account = {
       id: generateAccountId(),
@@ -131,189 +111,189 @@ export function Step2Accounts({ onNext, onBack }: Props) {
     setShowForm(false);
   };
 
-  // Remove account from list
   const removeAccount = (id: string) => {
     setAccounts((prev) => prev.filter((a) => a.id !== id));
   };
 
-  // Save and go to next step
   const handleContinue = () => {
     updateProfile({ accounts });
     onNext();
   };
 
   return (
-    <div className="space-y-6">
-      {/* Existing accounts list */}
+    <div className="space-y-4">
       {accounts.length > 0 && (
         <div className="space-y-3">
           {accounts.map((account) => {
             const config = ACCOUNT_CONFIG[account.type];
             return (
-              <Card key={account.id} className="onboarding-card">
-                <CardContent className="flex items-center justify-between py-4">
-                  <div className="flex items-center gap-3">
-                    <Badge className={config.color}>{config.label}</Badge>
-                    <div>
-                      <p className="text-sm font-semibold">
-                        ${account.currentBalance.toLocaleString()}
-                      </p>
-                      {account.contributionRoom !== undefined && (
-                        <p className="text-xs text-muted-foreground">
-                          Room: ${account.contributionRoom.toLocaleString()}
-                        </p>
-                      )}
-                      {account.institution && (
-                        <p className="text-xs text-muted-foreground">
-                          {account.institution}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => removeAccount(account.id)}
-                    className="text-muted-foreground hover:text-red-400"
+              <div
+                key={account.id}
+                className="flex items-center justify-between gap-4 rounded-xl border border-gray-100 bg-white p-4"
+              >
+                <div className="flex min-w-0 flex-1 items-center gap-3">
+                  <span
+                    className={`shrink-0 rounded-md px-2 py-1 text-xs font-medium ${config.color}`}
                   >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+                    {config.label}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-gray-900">
+                      ${account.currentBalance.toLocaleString()}
+                    </p>
+                    {account.contributionRoom !== undefined && (
+                      <p className="text-xs text-gray-500">
+                        Room: ${account.contributionRoom.toLocaleString()}
+                      </p>
+                    )}
+                    {account.institution && (
+                      <p className="text-xs text-gray-400">
+                        {account.institution}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeAccount(account.id)}
+                  className="shrink-0 text-gray-400 hover:border-gray-200 hover:text-red-500 hover:bg-red-50"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             );
           })}
         </div>
       )}
 
-      {/* Empty state */}
       {accounts.length === 0 && !showForm && (
-        <Card className="border-dashed border-border bg-card">
-          <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground text-sm mb-4">
-              No accounts added yet. Add your registered and non-registered
-              accounts.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50/50 p-8 text-center">
+          <p className="text-sm text-gray-500">
+            No accounts added yet. Add your registered and non-registered
+            accounts.
+          </p>
+        </div>
       )}
 
-      {/* Add account form */}
       {showForm && (
-        <Card className="border-emerald-500/30 bg-card">
-          <CardHeader>
-            <CardTitle className="text-base">Add Account</CardTitle>
-            <CardDescription>Enter your account details</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onAddAccount)} className="space-y-4">
-              {/* Account type */}
-              <div className="space-y-2">
-                <Label>Account Type</Label>
-                <Select
-                  defaultValue="CELI"
-                  onValueChange={(v) => setSelectedType(v as Account["type"])}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(ACCOUNT_CONFIG).map(([type, config]) => (
-                      <SelectItem key={type} value={type}>
-                        {config.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+          <p className="text-base font-semibold text-gray-900 mb-0.5">
+            Add Account
+          </p>
+          <p className="text-sm text-gray-400 mb-4">Enter your account details</p>
+          <form onSubmit={handleSubmit(onAddAccount)} className="space-y-4">
+            <div className="space-y-1">
+              <Label className={labelClass}>Account Type</Label>
+              <Select
+                defaultValue="CELI"
+                onValueChange={(v) => setSelectedType(v as Account["type"])}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(ACCOUNT_CONFIG).map(([type, config]) => (
+                    <SelectItem key={type} value={type}>
+                      {config.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label className={labelClass}>Current Balance ($)</Label>
+                <Input
+                  type="number"
+                  placeholder="25000"
+                  className={inputClass}
+                  {...register("currentBalance")}
+                />
+                {errors.currentBalance && (
+                  <p className="text-xs text-red-400">
+                    {errors.currentBalance.message}
+                  </p>
+                )}
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {/* Balance */}
-                <div className="space-y-2">
-                  <Label>Current Balance ($)</Label>
+              {hasRoom && (
+                <div className="space-y-1">
+                  <Label className={labelClass}>Contribution Room ($)</Label>
                   <Input
                     type="number"
-                    placeholder="25000"
-                    {...register("currentBalance")}
+                    placeholder="7000"
+                    className={inputClass}
+                    {...register("contributionRoom")}
                   />
-                  {errors.currentBalance && (
-                    <p className="text-xs text-red-400">
-                      {errors.currentBalance.message}
-                    </p>
-                  )}
                 </div>
+              )}
 
-                {/* Contribution room */}
-                {hasRoom && (
-                  <div className="space-y-2">
-                    <Label>Contribution Room ($)</Label>
-                    <Input
-                      type="number"
-                      placeholder="7000"
-                      {...register("contributionRoom")}
-                    />
-                  </div>
-                )}
-
-                {/* Institution */}
-                <div className={hasRoom ? "col-span-2" : "col-span-1"}>
-                  <div className="space-y-2">
-                    <Label>Institution (optional)</Label>
-                    <Input
-                      placeholder="Wealthsimple, Desjardins..."
-                      {...register("institution")}
-                    />
-                  </div>
+              <div className={hasRoom ? "col-span-2" : "col-span-1"}>
+                <div className="space-y-1">
+                  <Label className={labelClass}>Institution (optional)</Label>
+                  <Input
+                    placeholder="Wealthsimple, Desjardins..."
+                    className={inputClass}
+                    {...register("institution")}
+                  />
                 </div>
               </div>
+            </div>
 
-              <div className="flex gap-3">
-                <Button
-                  type="submit"
-                  className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
-                  style={{ background: "var(--ws-green)" }}
-                >
-                  Add Account
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowForm(false)}
-                  className="hover:opacity-90 transition-all"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+            <div className="flex gap-3">
+              <Button
+                type="submit"
+                className="flex-1 rounded-full py-4 font-semibold text-white hover:opacity-90 transition-all"
+                style={{ background: "var(--ws-green)" }}
+              >
+                Add Account
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowForm(false)}
+                className="rounded-full border border-gray-200 py-4 text-gray-600 hover:border-gray-300"
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </div>
       )}
 
-      {/* Add account button */}
       {!showForm && (
         <Button
-            type="button"
-            variant="outline"
-            className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:opacity-90 transition-all"
-            onClick={() => setShowForm(true)}
-          >
-          <Plus className="w-4 h-4 mr-2" />
+          type="button"
+          variant="outline"
+          className="w-full rounded-xl border-dashed py-4 transition-all"
+          style={{
+            borderColor: "var(--ws-green)",
+            color: "var(--ws-green)",
+          }}
+          onClick={() => setShowForm(true)}
+        >
+          <Plus className="mr-2 h-4 w-4" />
           Add Account
         </Button>
       )}
 
-      {/* Navigation */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 pt-2">
         <Button
+          type="button"
           variant="outline"
           onClick={onBack}
-          className="flex-1 rounded-full font-semibold py-6 hover:opacity-90 transition-all"
+          className="flex-1 rounded-full border border-gray-200 py-4 text-gray-600 hover:border-gray-300"
         >
           ← Back
         </Button>
         <Button
+          type="button"
           onClick={handleContinue}
           disabled={accounts.length === 0}
-          className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all disabled:opacity-40"
+          className="flex-1 rounded-full py-4 font-semibold text-white hover:opacity-90 transition-all disabled:opacity-40"
           style={{ background: "var(--ws-green)" }}
         >
           Continue to Real Estate →

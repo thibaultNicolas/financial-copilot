@@ -12,6 +12,9 @@
   --ws-gray-900: #111827;
   --font-sans: "DM Sans", sans-serif;
   --font-mono: "DM Mono", monospace;
+  /* Dropdown / popover (select content, etc.) */
+  --popover: #ffffff;
+  --popover-foreground: #111827;
 }
 
 * {
@@ -103,6 +106,20 @@ h4 {
   animation: pulse-green 2s ease-in-out infinite;
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-2deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -169,17 +186,44 @@ input[type="date"]:focus {
   background: #f8f9fa !important;
 }
 
-/* Cards in onboarding — subtler borders */
-.onboarding-card {
-  border: 1px solid #f1f3f5;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+/* Select dropdown content — ensure solid background */
+[data-slot="select-content"] {
+  background: var(--popover) !important;
+  color: var(--popover-foreground);
 }
 
-.onboarding-card:hover {
-  border-color: #e9ecef;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+/* Cards in onboarding — no box-shadow, clean border */
+.onboarding-card {
+  border: 1px solid var(--ws-gray-100);
+  border-radius: 1rem;
+  background: white;
+}
+
+/* Generate button shimmer on hover */
+.btn-generate-shimmer {
+  background-size: 200% 100%;
+  transition: background-position 0.6s ease, opacity 150ms ease;
+}
+.btn-generate-shimmer:hover {
+  background: linear-gradient(
+    90deg,
+    var(--ws-green) 0%,
+    #00e6a8 25%,
+    var(--ws-green) 50%,
+    #00e6a8 75%,
+    var(--ws-green) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: shimmer-right 0.6s ease;
+}
+@keyframes shimmer-right {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 /* Custom range slider */
 input[type="range"] {

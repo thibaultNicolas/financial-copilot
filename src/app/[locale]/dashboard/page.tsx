@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import { ProfileSummary } from "@/components/features/dashboard/ProfileSummary";
 import { RecommendationCard } from "@/components/features/dashboard/RecommendationCard";
 import { AdvisorBriefing } from "@/components/features/dashboard/AdvisorBriefing";
 import { TaxSimulator } from "@/components/features/dashboard/TaxSimulator";
+import { ScenarioComparison } from "@/components/features/dashboard/ScenarioComparison";
 import { TaxChat } from "@/components/features/dashboard/TaxChat";
 import { LoadingRecommendations } from "@/components/features/dashboard/LoadingRecommendations";
 import { LanguageToggle } from "@/components/features/LanguageToggle";
@@ -34,12 +35,22 @@ export default function DashboardPage() {
     clearReport,
   } = useRecommendationsStore();
 
+  const hasGenerated = useRef(false);
+
   useEffect(() => {
     if (!profile?.firstName) router.push(`/${locale}/onboarding`);
   }, [profile, router, locale]);
 
   useEffect(() => {
-    if (profile?.firstName && !report && !isLoading) generateRecommendations();
+    if (
+      profile?.firstName &&
+      !report &&
+      !isLoading &&
+      !hasGenerated.current
+    ) {
+      hasGenerated.current = true;
+      generateRecommendations();
+    }
   }, [profile]);
 
   const generateRecommendations = async () => {
@@ -128,6 +139,45 @@ export default function DashboardPage() {
         <ProfileSummary profile={profile} />
         <Separator className="bg-gray-100" />
 
+        {report && !isLoading && (
+          <nav
+            className="sticky top-14 z-40 -mx-6 px-6 py-3 flex flex-wrap items-center gap-2 border-b border-gray-100 bg-white/90 backdrop-blur-sm"
+            aria-label="Jump to section"
+          >
+            <span className="text-xs font-semibold text-gray-400 mr-2">
+              Jump to:
+            </span>
+            <a
+              href="#recommendations"
+              className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors hover:bg-gray-100"
+              style={{ color: "var(--ws-gray-600)" }}
+            >
+              Recommendations
+            </a>
+            <a
+              href="#tax-simulator"
+              className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors hover:bg-gray-100"
+              style={{ color: "var(--ws-gray-600)" }}
+            >
+              Tax Simulator
+            </a>
+            <a
+              href="#scenarios"
+              className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors hover:bg-gray-100"
+              style={{ color: "var(--ws-gray-600)" }}
+            >
+              Scenarios
+            </a>
+            <a
+              href="#ask-ai"
+              className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors hover:bg-gray-100"
+              style={{ color: "var(--ws-gray-600)" }}
+            >
+              Ask AI
+            </a>
+          </nav>
+        )}
+
         {isLoading && <LoadingRecommendations />}
 
         {error && !isLoading && (
@@ -145,7 +195,8 @@ export default function DashboardPage() {
 
         {report && !isLoading && (
           <div className="space-y-8 animate-fade-up">
-            <div className="flex items-end justify-between">
+            <section id="recommendations" className="scroll-mt-24 space-y-4">
+              <div className="flex items-end justify-between">
               <div>
                 <h2 className="text-2xl font-bold">
                   {t("recommendations.title")}
@@ -193,19 +244,32 @@ export default function DashboardPage() {
                 />
               ))}
             </div>
+            </section>
 
             <Separator className="bg-gray-100" />
-            <div>
+            <section id="tax-simulator" className="scroll-mt-24">
               <h2 className="text-2xl font-bold mb-2">Tax Simulator</h2>
               <p className="text-gray-500 text-sm mb-6">
                 Real calculations using CRA & Revenu Québec 2026 rules — not AI
                 estimates.
               </p>
               <TaxSimulator profile={profile} />
-            </div>
+            </section>
 
             <Separator className="bg-gray-100" />
-            <div>
+            <section id="scenarios" className="scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-2">
+                3-Year Scenario Comparison
+              </h2>
+              <p className="text-gray-500 text-sm mb-6">
+                Real tax projections across different life paths — calculated,
+                not estimated
+              </p>
+              <ScenarioComparison profile={profile} />
+            </section>
+
+            <Separator className="bg-gray-100" />
+            <section id="ask-ai" className="scroll-mt-24">
               <h2 className="text-2xl font-bold mb-2">Ask your financial AI</h2>
               <p className="text-gray-500 text-sm mb-6">
                 Ask any question about your situation — answers use your real
@@ -215,7 +279,7 @@ export default function DashboardPage() {
                 profile={profile}
                 recommendations={report.recommendations}
               />
-            </div>
+            </section>
 
             {report.advisorBriefing && (
               <>

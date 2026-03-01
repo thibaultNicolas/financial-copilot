@@ -13,16 +13,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useProfileStore } from "@/store/profile";
 import { provinceEnum, filingStatusEnum } from "@/lib/validation/profileSchema";
+
+const inputClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all";
+const labelClass = "text-sm font-medium text-gray-700 mb-1 block";
+const selectTriggerClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all h-auto min-h-[44px]";
+const cardClass = "p-6 rounded-2xl border border-gray-100 bg-white space-y-4";
+const sectionTitleClass = "text-base font-semibold text-gray-900";
+const sectionSubtitleClass = "text-sm text-gray-400 mt-0.5";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -66,21 +67,23 @@ export function Step1Income({ onNext }: Props) {
       province: profile?.province ?? "QC",
       filingStatus: profile?.filingStatus ?? "SINGLE",
       hasPartner: profile?.hasPartner ?? false,
-      partnerIncome: profile?.partnerIncome ?? 0,
+      partnerIncome: profile?.partnerIncome ?? undefined,
       grossAnnualSalary:
-        profile?.income?.employment?.grossAnnualSalary ?? undefined,
+        profile?.income?.employment?.grossAnnualSalary != null
+          ? profile.income.employment.grossAnnualSalary
+          : ("" as unknown as number),
       employerName: profile?.income?.employment?.employerName ?? "",
       hasFreelance: !!profile?.income?.freelance,
-      freelanceRevenue: profile?.income?.freelance?.estimatedAnnualRevenue ?? 0,
+      freelanceRevenue: profile?.income?.freelance?.estimatedAnnualRevenue ?? undefined,
       hasGSTQST: profile?.income?.freelance?.hasGSTQSTRegistration ?? false,
       expenseEquipment:
-        profile?.income?.freelance?.deductibleExpenses?.equipment ?? 0,
+        profile?.income?.freelance?.deductibleExpenses?.equipment ?? undefined,
       expenseSoftware:
-        profile?.income?.freelance?.deductibleExpenses?.software ?? 0,
+        profile?.income?.freelance?.deductibleExpenses?.software ?? undefined,
       expenseVehicle:
-        profile?.income?.freelance?.deductibleExpenses?.vehicle ?? 0,
-      expensePhone: profile?.income?.freelance?.deductibleExpenses?.phone ?? 0,
-      expenseOther: profile?.income?.freelance?.deductibleExpenses?.other ?? 0,
+        profile?.income?.freelance?.deductibleExpenses?.vehicle ?? undefined,
+      expensePhone: profile?.income?.freelance?.deductibleExpenses?.phone ?? undefined,
+      expenseOther: profile?.income?.freelance?.deductibleExpenses?.other ?? undefined,
     },
   });
 
@@ -94,24 +97,24 @@ export function Step1Income({ onNext }: Props) {
       province: data.province,
       filingStatus: data.filingStatus,
       hasPartner: data.hasPartner,
-      partnerIncome: data.partnerIncome,
+      partnerIncome: Number(data.partnerIncome) || 0,
       income: {
         employment: {
-          grossAnnualSalary: data.grossAnnualSalary,
+          grossAnnualSalary: Number(data.grossAnnualSalary) || 0,
           employerName: data.employerName,
           province: data.province,
         },
         freelance: data.hasFreelance
           ? {
-              estimatedAnnualRevenue: data.freelanceRevenue ?? 0,
+              estimatedAnnualRevenue: Number(data.freelanceRevenue) ?? 0,
               hasGSTQSTRegistration: data.hasGSTQST ?? false,
               deductibleExpenses: {
                 homeOffice: true,
-                equipment: data.expenseEquipment ?? 0,
-                software: data.expenseSoftware ?? 0,
-                vehicle: data.expenseVehicle ?? 0,
-                phone: data.expensePhone ?? 0,
-                other: data.expenseOther ?? 0,
+                equipment: Number(data.expenseEquipment) ?? 0,
+                software: Number(data.expenseSoftware) ?? 0,
+                vehicle: Number(data.expenseVehicle) ?? 0,
+                phone: Number(data.expensePhone) ?? 0,
+                other: Number(data.expenseOther) ?? 0,
               },
             }
           : undefined,
@@ -121,37 +124,46 @@ export function Step1Income({ onNext }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Personal Info */}
-      <Card className="onboarding-card">
-        <CardHeader>
-          <CardTitle className="text-base">Personal Information</CardTitle>
-          <CardDescription>Basic profile details</CardDescription>
-        </CardHeader>
-        <CardContent className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>First Name</Label>
-            <Input placeholder="Nicolas" {...register("firstName")} />
+      <div className={cardClass}>
+        <div>
+          <h3 className={sectionTitleClass}>Personal Information</h3>
+          <p className={sectionSubtitleClass}>Basic profile details</p>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label className={labelClass}>First Name</Label>
+            <Input
+              placeholder="Nicolas"
+              className={inputClass}
+              {...register("firstName")}
+            />
             {errors.firstName && (
               <p className="text-xs text-red-400">{errors.firstName.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label>Age</Label>
-            <Input type="number" placeholder="30" {...register("age")} />
+          <div className="space-y-1">
+            <Label className={labelClass}>Age</Label>
+            <Input
+              type="number"
+              placeholder="30"
+              className={inputClass}
+              {...register("age")}
+            />
             {errors.age && (
               <p className="text-xs text-red-400">{errors.age.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label>Province</Label>
+          <div className="space-y-1">
+            <Label className={labelClass}>Province</Label>
             <Select
               defaultValue="QC"
               onValueChange={(v) => setValue("province", v as "QC")}
             >
-              <SelectTrigger>
+              <SelectTrigger className={selectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -164,13 +176,13 @@ export function Step1Income({ onNext }: Props) {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label>Filing Status</Label>
+          <div className="space-y-1">
+            <Label className={labelClass}>Filing Status</Label>
             <Select
               defaultValue="SINGLE"
               onValueChange={(v) => setValue("filingStatus", v as "SINGLE")}
             >
-              <SelectTrigger>
+              <SelectTrigger className={selectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -185,35 +197,42 @@ export function Step1Income({ onNext }: Props) {
             <input
               type="checkbox"
               id="hasPartner"
-              className="w-4 h-4 accent-emerald-500"
+              className="w-4 h-4 accent-[var(--ws-green)]"
               {...register("hasPartner")}
             />
-            <Label htmlFor="hasPartner">I have a partner / spouse</Label>
+            <Label htmlFor="hasPartner" className="text-sm font-medium text-gray-700">
+              I have a partner / spouse
+            </Label>
           </div>
 
           {hasPartner && (
-            <div className="col-span-2 space-y-2">
-              <Label>Partner Annual Income ($)</Label>
+            <div className="col-span-2 space-y-1">
+              <Label className={labelClass}>Partner Annual Income ($)</Label>
               <Input
                 type="number"
                 placeholder="75000"
+                className={inputClass}
                 {...register("partnerIncome")}
               />
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Employment Income */}
-      <Card className="onboarding-card">
-        <CardHeader>
-          <CardTitle className="text-base">Employment Income</CardTitle>
-          <CardDescription>Your T4 employment details</CardDescription>
-        </CardHeader>
-        <CardContent className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Employer Name</Label>
-            <Input placeholder="Acme Corp" {...register("employerName")} />
+      <div className={cardClass}>
+        <div>
+          <h3 className={sectionTitleClass}>Employment Income</h3>
+          <p className={sectionSubtitleClass}>Your T4 employment details</p>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label className={labelClass}>Employer Name</Label>
+            <Input
+              placeholder="Acme Corp"
+              className={inputClass}
+              {...register("employerName")}
+            />
             {errors.employerName && (
               <p className="text-xs text-red-400">
                 {errors.employerName.message}
@@ -221,11 +240,12 @@ export function Step1Income({ onNext }: Props) {
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label>Gross Annual Salary ($)</Label>
+          <div className="space-y-1">
+            <Label className={labelClass}>Gross Annual Salary ($)</Label>
             <Input
               type="number"
               placeholder="95000"
+              className={inputClass}
               {...register("grossAnnualSalary")}
             />
             {errors.grossAnnualSalary && (
@@ -234,41 +254,42 @@ export function Step1Income({ onNext }: Props) {
               </p>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Freelance Income */}
-      <Card className="onboarding-card">
-        <CardHeader>
-          <CardTitle className="text-base">
+      <div className={cardClass}>
+        <div>
+          <h3 className={sectionTitleClass}>
             Freelance / Self-Employed Income
-          </CardTitle>
-          <CardDescription>
+          </h3>
+          <p className={sectionSubtitleClass}>
             Side contracts and self-employment revenue
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+          </p>
+        </div>
+        <div className="space-y-4">
           <div className="flex items-center gap-3">
             <input
               type="checkbox"
               id="hasFreelance"
-              className="w-4 h-4 accent-emerald-500"
+              className="w-4 h-4 accent-[var(--ws-green)]"
               {...register("hasFreelance")}
             />
-            <Label htmlFor="hasFreelance">
+            <Label htmlFor="hasFreelance" className="text-sm font-medium text-gray-700">
               I have freelance / self-employed income
             </Label>
           </div>
 
           {hasFreelance && (
             <>
-              <Separator />
+              <div className="border-t border-gray-100 pt-4" />
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Estimated Annual Revenue ($)</Label>
+                <div className="space-y-1">
+                  <Label className={labelClass}>Estimated Annual Revenue ($)</Label>
                   <Input
                     type="number"
                     placeholder="30000"
+                    className={inputClass}
                     {...register("freelanceRevenue")}
                   />
                 </div>
@@ -277,14 +298,16 @@ export function Step1Income({ onNext }: Props) {
                   <input
                     type="checkbox"
                     id="hasGSTQST"
-                    className="w-4 h-4 accent-emerald-500"
+                    className="w-4 h-4 accent-[var(--ws-green)]"
                     {...register("hasGSTQST")}
                   />
-                  <Label htmlFor="hasGSTQST">GST/QST registered</Label>
+                  <Label htmlFor="hasGSTQST" className="text-sm font-medium text-gray-700">
+                    GST/QST registered
+                  </Label>
                 </div>
 
                 <div className="col-span-2">
-                  <p className="text-xs text-muted-foreground mb-3 font-medium uppercase tracking-wide">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
                     Annual Deductible Expenses
                   </p>
                   <div className="grid grid-cols-2 gap-3">
@@ -296,10 +319,11 @@ export function Step1Income({ onNext }: Props) {
                       { label: "Other ($)", field: "expenseOther" },
                     ].map(({ label, field }) => (
                       <div key={field} className="space-y-1">
-                        <Label className="text-xs">{label}</Label>
+                        <Label className={labelClass}>{label}</Label>
                         <Input
                           type="number"
                           placeholder="0"
+                          className={inputClass}
                           {...register(field as keyof FormData)}
                         />
                       </div>
@@ -309,12 +333,12 @@ export function Step1Income({ onNext }: Props) {
               </div>
             </>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <Button
         type="submit"
-        className="w-full text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+        className="w-full rounded-full py-4 font-semibold text-white hover:opacity-90 transition-all"
         style={{ background: "var(--ws-green)" }}
       >
         Continue to Accounts →

@@ -30,6 +30,7 @@ export const calculateTax = (input: ScenarioInput): TaxBreakdown => {
     rrspContribution,
     freelanceExpenses,
     province,
+    additionalDeductions = 0,
   } = input;
 
   // ─── INCOME ───────────────────────────────────────────────
@@ -43,7 +44,7 @@ export const calculateTax = (input: ScenarioInput): TaxBreakdown => {
     rrspContribution,
     calculateRRSPContributionRoom(employmentIncome + netFreelanceIncome),
   );
-  const totalDeductions = rrspDeduction;
+  const totalDeductions = rrspDeduction + additionalDeductions;
 
   // ─── TAXABLE INCOME ───────────────────────────────────────
   const taxableIncome = Math.max(0, totalGrossIncome - totalDeductions);

@@ -97,8 +97,9 @@ export async function POST(request: NextRequest) {
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
         const result = await openai.chat.completions.create({
-          model: "gpt-4o-mini",
+          model: "gpt-4o",
           temperature: 0.2,
+          max_tokens: 2000,
           response_format: { type: "json_object" },
           messages: [
             { role: "system", content: systemPrompt },

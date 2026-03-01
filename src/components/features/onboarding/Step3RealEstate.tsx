@@ -15,21 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { useProfileStore } from "@/store/profile";
 import type { RealEstate } from "@/types";
 import { realEstateTypeEnum } from "@/lib/validation/profileSchema";
 
-// ============================================
-// SCHEMA
-// ============================================
+const inputClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all";
+const labelClass = "text-sm font-medium text-gray-700 mb-1 block";
+const selectTriggerClass =
+  "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[var(--ws-green)] focus:bg-white transition-all h-auto min-h-[44px]";
 
 const realEstateFormSchema = z.object({
   type: realEstateTypeEnum,
@@ -38,7 +32,6 @@ const realEstateFormSchema = z.object({
   mortgageRate: z.coerce.number().min(0).max(20),
   mortgageMaturityDate: z.string().optional(),
   isOwnerOccupied: z.boolean(),
-  // Rental specific
   units: z.coerce.number().min(1).optional(),
   monthlyRentPerUnit: z.coerce.number().min(0).optional(),
   mortgageInterestAnnual: z.coerce.number().min(0).optional(),
@@ -49,23 +42,14 @@ const realEstateFormSchema = z.object({
 
 type RealEstateForm = z.infer<typeof realEstateFormSchema>;
 
-/** Generate a unique id (used in event handlers only, not during render). */
 function generatePropertyId(): string {
   return `property-${Date.now()}`;
 }
-
-// ============================================
-// PROPS
-// ============================================
 
 type Props = {
   onNext: () => void;
   onBack: () => void;
 };
-
-// ============================================
-// COMPONENT
-// ============================================
 
 export function Step3RealEstate({ onNext, onBack }: Props) {
   const { profile, updateProfile } = useProfileStore();
@@ -95,7 +79,6 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
 
   const isRental = selectedType === "RENTAL";
 
-  // Add property
   const onAddProperty = (data: RealEstateForm) => {
     const newProperty: RealEstate = {
       id: generatePropertyId(),
@@ -107,7 +90,6 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
       isOwnerOccupied: selectedType === "PRIMARY_RESIDENCE",
     };
 
-    // If rental, also save to income (only when profile.income exists from step 1)
     if (isRental && profile?.income) {
       updateProfile({
         income: {
@@ -130,266 +112,258 @@ export function Step3RealEstate({ onNext, onBack }: Props) {
     setShowForm(false);
   };
 
-  // Remove property
   const removeProperty = (id: string) => {
     setProperties((prev) => prev.filter((p) => p.id !== id));
   };
 
-  // Save and continue
   const handleContinue = () => {
     updateProfile({ realEstate: properties });
     onNext();
   };
 
-  // Equity calculation helper
   const equity = (p: RealEstate) => p.estimatedValue - p.mortgageBalance;
 
   return (
-    <div className="space-y-6">
-      {/* Properties list */}
+    <div className="space-y-4">
       {properties.length > 0 && (
         <div className="space-y-3">
           {properties.map((property) => (
-            <Card key={property.id} className="onboarding-card">
-              <CardContent className="flex items-center justify-between py-4">
-                <div className="flex items-center gap-3">
-                  {property.type === "PRIMARY_RESIDENCE" ? (
-                    <Home className="w-5 h-5 text-emerald-400" />
-                  ) : (
-                    <Building2 className="w-5 h-5 text-blue-400" />
-                  )}
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <Badge
-                        className={
-                          property.type === "PRIMARY_RESIDENCE"
-                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                            : "bg-blue-500/10 text-blue-400 border-blue-500/20"
-                        }
-                      >
-                        {property.type === "PRIMARY_RESIDENCE"
-                          ? "Primary Residence"
-                          : "Rental Property"}
-                      </Badge>
-                    </div>
-                    <p className="text-sm font-semibold mt-1">
-                      Value: ${property.estimatedValue.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Mortgage: ${property.mortgageBalance.toLocaleString()} @{" "}
-                      {property.mortgageRate}% · Equity: $
-                      {equity(property).toLocaleString()}
-                    </p>
-                  </div>
+            <div
+              key={property.id}
+              className="flex items-center justify-between gap-4 rounded-xl border border-gray-100 bg-white p-4"
+            >
+              <div className="flex min-w-0 flex-1 items-center gap-3">
+                {property.type === "PRIMARY_RESIDENCE" ? (
+                  <Home className="h-5 w-5 shrink-0 text-emerald-500" />
+                ) : (
+                  <Building2 className="h-5 w-5 shrink-0 text-blue-500" />
+                )}
+                <div className="min-w-0">
+                  <span
+                    className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${
+                      property.type === "PRIMARY_RESIDENCE"
+                        ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
+                        : "bg-blue-500/10 text-blue-600 border border-blue-500/20"
+                    }`}
+                  >
+                    {property.type === "PRIMARY_RESIDENCE"
+                      ? "Primary Residence"
+                      : "Rental Property"}
+                  </span>
+                  <p className="mt-1 text-sm font-bold text-gray-900">
+                    Value: ${property.estimatedValue.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Mortgage: ${property.mortgageBalance.toLocaleString()} @{" "}
+                    {property.mortgageRate}%
+                  </p>
+                  <p
+                    className="text-xs mt-0.5"
+                    style={{ color: "var(--ws-green-dark)" }}
+                  >
+                    Equity: ${equity(property).toLocaleString()}
+                  </p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeProperty(property.id)}
-                  className="text-muted-foreground hover:text-red-400"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </CardContent>
-            </Card>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => removeProperty(property.id)}
+                className="shrink-0 text-gray-400 hover:border-gray-200 hover:text-red-500 hover:bg-red-50"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           ))}
         </div>
       )}
 
-      {/* Empty state */}
       {properties.length === 0 && !showForm && (
-        <Card className="border-dashed border-border bg-card">
-          <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground text-sm">
-              No properties added yet. Add your primary residence or rental
-              properties.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50/50 p-8 text-center">
+          <p className="text-sm text-gray-500">
+            No properties added yet. Add your primary residence or rental
+            properties.
+          </p>
+        </div>
       )}
 
-      {/* Add property form */}
       {showForm && (
-        <Card className="border-emerald-500/30 bg-card">
-          <CardHeader>
-            <CardTitle className="text-base">Add Property</CardTitle>
-            <CardDescription>Enter your property details</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onAddProperty)} className="space-y-4">
-              {/* Property type */}
-              <div className="space-y-2">
-                <Label>Property Type</Label>
-                <Select
-                  defaultValue="PRIMARY_RESIDENCE"
-                  onValueChange={(v) =>
-                    setSelectedType(v as RealEstate["type"])
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="PRIMARY_RESIDENCE">
-                      Primary Residence
-                    </SelectItem>
-                    <SelectItem value="RENTAL">Rental Property</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+          <p className="text-base font-semibold text-gray-900 mb-0.5">
+            Add Property
+          </p>
+          <p className="text-sm text-gray-400 mb-4">Enter your property details</p>
+          <form onSubmit={handleSubmit(onAddProperty)} className="space-y-4">
+            <div className="space-y-1">
+              <Label className={labelClass}>Property Type</Label>
+              <Select
+                defaultValue="PRIMARY_RESIDENCE"
+                onValueChange={(v) =>
+                  setSelectedType(v as RealEstate["type"])
+                }
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="PRIMARY_RESIDENCE">
+                    Primary Residence
+                  </SelectItem>
+                  <SelectItem value="RENTAL">Rental Property</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-              {/* Basic details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Estimated Value ($)</Label>
-                  <Input
-                    type="number"
-                    placeholder="550000"
-                    {...register("estimatedValue")}
-                  />
-                  {errors.estimatedValue && (
-                    <p className="text-xs text-red-400">
-                      {errors.estimatedValue.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Mortgage Balance ($)</Label>
-                  <Input
-                    type="number"
-                    placeholder="380000"
-                    {...register("mortgageBalance")}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Mortgage Rate (%)</Label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    placeholder="4.99"
-                    {...register("mortgageRate")}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Maturity Date (optional)</Label>
-                  <Input type="date" {...register("mortgageMaturityDate")} />
-                </div>
-              </div>
-
-              {/* Rental specific fields */}
-              {isRental && (
-                <>
-                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide pt-2">
-                    Rental Income & Expenses
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label className={labelClass}>Estimated Value ($)</Label>
+                <Input
+                  type="number"
+                  placeholder="550000"
+                  className={inputClass}
+                  {...register("estimatedValue")}
+                />
+                {errors.estimatedValue && (
+                  <p className="text-xs text-red-400">
+                    {errors.estimatedValue.message}
                   </p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Number of Units</Label>
-                      <Input
-                        type="number"
-                        placeholder="3"
-                        {...register("units")}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Monthly Rent / Unit ($)</Label>
-                      <Input
-                        type="number"
-                        placeholder="1400"
-                        {...register("monthlyRentPerUnit")}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Mortgage Interest / Year ($)</Label>
-                      <Input
-                        type="number"
-                        placeholder="18000"
-                        {...register("mortgageInterestAnnual")}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Property Tax / Year ($)</Label>
-                      <Input
-                        type="number"
-                        placeholder="4500"
-                        {...register("propertyTaxAnnual")}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Insurance / Year ($)</Label>
-                      <Input
-                        type="number"
-                        placeholder="2400"
-                        {...register("insuranceAnnual")}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Maintenance / Year ($)</Label>
-                      <Input
-                        type="number"
-                        placeholder="3000"
-                        {...register("maintenanceAnnual")}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div className="flex gap-3">
-                <Button
-                  type="submit"
-                  className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
-                  style={{ background: "var(--ws-green)" }}
-                >
-                  Add Property
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowForm(false)}
-                  className="hover:opacity-90 transition-all"
-                >
-                  Cancel
-                </Button>
+                )}
               </div>
-            </form>
-          </CardContent>
-        </Card>
+
+              <div className="space-y-1">
+                <Label className={labelClass}>Mortgage Balance ($)</Label>
+                <Input
+                  type="number"
+                  placeholder="380000"
+                  className={inputClass}
+                  {...register("mortgageBalance")}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className={labelClass}>Mortgage Rate (%)</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  placeholder="4.99"
+                  className={inputClass}
+                  {...register("mortgageRate")}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label className={labelClass}>Maturity Date (optional)</Label>
+                <Input
+                  type="date"
+                  className={inputClass}
+                  {...register("mortgageMaturityDate")}
+                />
+              </div>
+            </div>
+
+            {isRental && (
+              <>
+                <p className="text-xs font-medium uppercase tracking-wide text-gray-500 pt-2">
+                  Rental Income & Expenses
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    {
+                      label: "Number of Units",
+                      field: "units" as const,
+                      placeholder: "3",
+                    },
+                    {
+                      label: "Monthly Rent / Unit ($)",
+                      field: "monthlyRentPerUnit" as const,
+                      placeholder: "1400",
+                    },
+                    {
+                      label: "Mortgage Interest / Year ($)",
+                      field: "mortgageInterestAnnual" as const,
+                      placeholder: "18000",
+                    },
+                    {
+                      label: "Property Tax / Year ($)",
+                      field: "propertyTaxAnnual" as const,
+                      placeholder: "4500",
+                    },
+                    {
+                      label: "Insurance / Year ($)",
+                      field: "insuranceAnnual" as const,
+                      placeholder: "2400",
+                    },
+                    {
+                      label: "Maintenance / Year ($)",
+                      field: "maintenanceAnnual" as const,
+                      placeholder: "3000",
+                    },
+                  ].map(({ label, field, placeholder }) => (
+                    <div key={field} className="space-y-1">
+                      <Label className={labelClass}>{label}</Label>
+                      <Input
+                        type="number"
+                        placeholder={placeholder}
+                        className={inputClass}
+                        {...register(field)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <div className="flex gap-3">
+              <Button
+                type="submit"
+                className="flex-1 rounded-full py-4 font-semibold text-white hover:opacity-90 transition-all"
+                style={{ background: "var(--ws-green)" }}
+              >
+                Add Property
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowForm(false)}
+                className="rounded-full border border-gray-200 py-4 text-gray-600 hover:border-gray-300"
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </div>
       )}
 
-      {/* Add property button */}
       {!showForm && (
         <Button
           type="button"
           variant="outline"
-          className="w-full border-dashed border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:opacity-90 transition-all"
+          className="w-full rounded-xl border-dashed py-4 transition-all"
+          style={{
+            borderColor: "var(--ws-green)",
+            color: "var(--ws-green)",
+          }}
           onClick={() => setShowForm(true)}
         >
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className="mr-2 h-4 w-4" />
           Add Property
         </Button>
       )}
 
-      {/* Navigation */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 pt-2">
         <Button
+          type="button"
           variant="outline"
           onClick={onBack}
-          className="flex-1 rounded-full font-semibold py-6 hover:opacity-90 transition-all"
+          className="flex-1 rounded-full border border-gray-200 py-4 text-gray-600 hover:border-gray-300"
         >
           ← Back
         </Button>
         <Button
+          type="button"
           onClick={handleContinue}
-          className="flex-1 text-white font-semibold py-6 rounded-full hover:opacity-90 transition-all"
+          className="flex-1 rounded-full py-4 font-semibold text-white hover:opacity-90 transition-all"
           style={{ background: "var(--ws-green)" }}
         >
           Continue to Life Events →

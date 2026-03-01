@@ -4,42 +4,66 @@
     "getStarted": "Get started"
   },
   "home": {
-    "badge": "AI recommends · Humans decide",
-    "title1": "Your money,",
-    "title2": "finally optimized.",
+    "badge": "Wealthsimple AI Builders · 2026",
+    "title1": "Your finances,",
+    "title2": "finally make sense.",
+    "title2Prefix": "finally make ",
+    "title2Highlight": "sense.",
     "subtitle": "Financial Copilot analyzes your complete Canadian financial picture — employment, freelance, rental income, all your accounts — and tells you exactly what to do next, in order of impact.",
+    "socialProof": "Built with GPT-4o · CRA verified · EN/FR",
     "cta": "Analyze my finances",
     "demo": "View live demo →",
     "stats": {
       "income": "3 income",
-      "incomeSub": "sources analyzed simultaneously",
+      "incomeSub": "sources analyzed",
       "savings": "$14,800+",
-      "savingsSub": "average annual tax savings identified",
-      "rules": "100%",
-      "rulesSub": "Canadian tax rules, verified 2026"
+      "savingsSub": "avg tax savings",
+      "rules": "2026",
+      "rulesSub": "CRA verified rules",
+      "minComplete": "< 3 min",
+      "minCompleteSub": "to complete"
     },
     "features": {
       "title": "Built for real complexity",
       "subtitle": "Not just a calculator. A system that thinks about your whole picture.",
       "boundary": {
-        "title": "Clear human/AI boundary",
-        "description": "The system knows exactly what it can recommend confidently, and when to hand off to a human advisor. Every recommendation shows its confidence score."
+        "title": "Ask anything about your money",
+        "description": "Chat with an AI that knows your exact numbers. Not generic advice — answers grounded in your calculated tax breakdown."
       },
       "tax": {
-        "title": "Canadian tax rules 2026",
-        "description": "RRSP, TFSA, FHSA, CRI, Quebec provincial brackets — all verified against CRA and Revenu Québec. No hallucinated figures."
+        "title": "Real tax math, not AI guesses",
+        "description": "We built a full Canadian tax engine — federal brackets, Quebec provincial, QPP, Quebec abatement. Every number is calculated, then interpreted by AI."
       },
       "multi": {
-        "title": "Multi-income optimization",
-        "description": "Employment salary, freelance contracts, rental income — the system optimizes across all sources simultaneously, something no spreadsheet can do."
+        "title": "3-year scenario comparison",
+        "description": "See your tax situation across different life paths — incorporated vs salaried, married vs single — with real projections."
       }
     },
     "ctaSection": {
-      "title": "Ready to see your financial picture?",
+      "title": "Ready to see your real numbers?",
       "subtitle": "Takes 3 minutes. No account required.",
-      "cta": "Get started — it's free →"
+      "cta": "Get started — it's free →",
+      "badge1": "No account required",
+      "badge2": "Canada only · 2026 rules",
+      "badge3": "AI recommends · You decide"
     },
-    "disclaimer": "For informational purposes only. Not financial advice. Always consult a qualified financial advisor before making financial decisions."
+    "disclaimer": "For informational purposes only. Not financial advice. Always consult a qualified financial advisor before making financial decisions.",
+    "footerDisclaimer": "For informational purposes only. Not financial advice."
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "step1": {
+      "title": "Tell us your situation",
+      "desc": "Income, accounts, real estate"
+    },
+    "step2": {
+      "title": "AI calculates your taxes",
+      "desc": "Real CRA math, not estimates"
+    },
+    "step3": {
+      "title": "Get your action plan",
+      "desc": "Prioritized, confidence-scored"
+    }
   },
   "onboarding": {
     "steps": {

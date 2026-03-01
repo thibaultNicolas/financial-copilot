@@ -4,42 +4,66 @@
     "getStarted": "Commencer"
   },
   "home": {
-    "badge": "L'IA recommande · L'humain décide",
-    "title1": "Votre argent,",
-    "title2": "enfin optimisé.",
+    "badge": "Wealthsimple AI Builders · 2026",
+    "title1": "Vos finances,",
+    "title2": "enfin claires.",
+    "title2Prefix": "enfin ",
+    "title2Highlight": "claires.",
     "subtitle": "Financial Copilot analyse votre situation financière canadienne complète — emploi, freelance, revenus locatifs, tous vos comptes — et vous dit exactement quoi faire, dans l'ordre d'impact.",
+    "socialProof": "Propulsé par GPT-4o · Vérifié ARC · EN/FR",
     "cta": "Analyser mes finances",
     "demo": "Voir la démo →",
     "stats": {
       "income": "3 sources",
-      "incomeSub": "de revenus analysées simultanément",
+      "incomeSub": "de revenus analysées",
       "savings": "14 800 $+",
-      "savingsSub": "d'économies fiscales annuelles identifiées en moyenne",
-      "rules": "100 %",
-      "rulesSub": "Règles fiscales canadiennes, vérifiées 2026"
+      "savingsSub": "d'économies fiscales moy.",
+      "rules": "2026",
+      "rulesSub": "Règles ARC vérifiées",
+      "minComplete": "< 3 min",
+      "minCompleteSub": "pour compléter"
     },
     "features": {
       "title": "Conçu pour la vraie complexité",
       "subtitle": "Pas juste une calculatrice. Un système qui pense à toute votre situation.",
       "boundary": {
-        "title": "Frontière humain/IA claire",
-        "description": "Le système sait exactement ce qu'il peut recommander avec confiance, et quand transférer à un conseiller humain. Chaque recommandation affiche son score de confiance."
+        "title": "Posez vos questions sur votre argent",
+        "description": "Discutez avec une IA qui connaît vos chiffres exacts. Pas de conseils génériques — des réponses basées sur votre calcul fiscal."
       },
       "tax": {
-        "title": "Règles fiscales canadiennes 2026",
-        "description": "REER, CELI, CELIAPP, CRI, paliers provinciaux québécois — tous vérifiés contre l'ARC et Revenu Québec. Aucune donnée inventée."
+        "title": "Vrais calculs fiscaux, pas des suppositions IA",
+        "description": "Moteur fiscal canadien complet — paliers fédéraux, Québec, RQAP, abattement Québec. Chaque chiffre est calculé, puis interprété par l'IA."
       },
       "multi": {
-        "title": "Optimisation multi-revenus",
-        "description": "Salaire d'emploi, contrats freelance, revenus locatifs — le système optimise toutes les sources simultanément, ce qu'aucun tableur ne peut faire."
+        "title": "Comparaison de scénarios sur 3 ans",
+        "description": "Voyez votre situation fiscale selon différents parcours — incorporé vs salarié, marié vs célibataire — avec des projections réelles."
       }
     },
     "ctaSection": {
-      "title": "Prêt à voir votre portrait financier?",
+      "title": "Prêt à voir vos vrais chiffres?",
       "subtitle": "3 minutes. Aucun compte requis.",
-      "cta": "Commencer — c'est gratuit →"
+      "cta": "Commencer — c'est gratuit →",
+      "badge1": "Aucun compte requis",
+      "badge2": "Canada seulement · Règles 2026",
+      "badge3": "L'IA recommande · Vous décidez"
     },
-    "disclaimer": "À titre informatif seulement. Ne constitue pas un conseil financier. Consultez toujours un conseiller financier qualifié avant de prendre des décisions financières."
+    "disclaimer": "À titre informatif seulement. Ne constitue pas un conseil financier. Consultez toujours un conseiller financier qualifié avant de prendre des décisions financières.",
+    "footerDisclaimer": "À titre informatif seulement. Ne constitue pas un conseil financier."
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "step1": {
+      "title": "Décrivez votre situation",
+      "desc": "Revenus, comptes, immobilier"
+    },
+    "step2": {
+      "title": "L'IA calcule vos impôts",
+      "desc": "Vrais calculs ARC, pas des estimations"
+    },
+    "step3": {
+      "title": "Obtenez votre plan d'action",
+      "desc": "Priorisé, avec score de confiance"
+    }
   },
   "onboarding": {
     "steps": {
